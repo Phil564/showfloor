@@ -16,7 +16,9 @@ DEFINES :=
 # 'make clean' may be required first.
 
 # Build for the N64 (turn this off for ports)
-TARGET_N64 ?= 1
+TARGET_N64 ?= 0
+# Build for Nintendo DS
+TARGET_NDS ?= 1
 
 
 # COMPILER - selects the C compiler to use
@@ -39,6 +41,15 @@ $(eval $(call validate-option,VERSION,jp))
 
 OPT_FLAGS := -g
 GRUCODE   ?= f3d_old
+
+ifeq ($(TARGET_NDS),1)
+  OPT_FLAGS := -O2 -flto -ffast-math
+  GRUCODE := f3dex2
+  COMPILER := gcc
+  DEVKITPRO ?= /opt/devkitpro
+  DEVKITARM ?= $(DEVKITPRO)/devkitARM
+  NDSTOOL ?= $(DEVKITPRO)/tools/bin/ndstool
+endif
 
 TARGET := sm64.$(VERSION)
 
@@ -84,7 +95,9 @@ ifeq      ($(COMPILER),ido)
 else ifeq ($(COMPILER),gcc)
   NON_MATCHING := 1
   MIPSISET     := -mips3
+ifeq ($(TARGET_NDS),0)
   OPT_FLAGS    := -O2
+endif
 endif
 
 
@@ -161,6 +174,8 @@ TOOLS_DIR := tools
 # include all necessary assets by default.
 
 PYTHON := python3
+SOX := sox
+GRIT := $(DEVKITPRO)/tools/bin/grit
 
 ifeq ($(filter clean distclean print-%,$(MAKECMDGOALS)),)
 
@@ -195,9 +210,15 @@ endif
 
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
+ifeq ($(TARGET_NDS),1)
+BUILD_DIR      := $(BUILD_DIR_BASE)/$(VERSION)_nds
+ARM7           := $(BUILD_DIR)/$(TARGET).arm7.elf
+ARM9           := $(BUILD_DIR)/$(TARGET).arm9.elf
+ROM            := $(BUILD_DIR)/$(TARGET).nds
+else
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(VERSION)
 ROM            := $(BUILD_DIR)/$(TARGET).z64
-ELF            := $(BUILD_DIR)/$(TARGET).elf
+endif
 LIBULTRA       := $(BUILD_DIR)/libultra.a
 LD_SCRIPT      := sm64.ld
 CHARMAP        := charmap.txt
@@ -209,11 +230,20 @@ ACTOR_DIR      := actors
 LEVEL_DIRS     := $(patsubst levels/%,%,$(dir $(wildcard levels/*/header.h)))
 
 # Directories containing source files
-SRC_DIRS := src src/engine src/game src/audio src/menu src/buffers actors levels bin data assets asm lib sound
+SRC_DIRS := src src/engine src/game src/audio src/menu src/buffers actors levels bin data assets lib sound
 BIN_DIRS := bin
 
-ULTRA_SRC_DIRS := lib/src lib/src/math lib/asm lib/data
+ULTRA_SRC_DIRS := lib/src lib/src/math lib/data
 ULTRA_BIN_DIRS := lib/bin
+
+ifeq ($(TARGET_NDS),1)
+  SRC_DIRS += src/nds
+  ARM7_SRC_DIRS := src/nds/arm7
+  GFX_DIRS := src/nds/gfx
+else
+  SRC_DIRS += asm
+  ULTRA_SRC_DIRS += lib/asm
+endif
 
 GODDARD_SRC_DIRS := src/goddard src/goddard/dynlists
 
@@ -228,14 +258,40 @@ ULTRA_C_FILES     := $(foreach dir,$(ULTRA_SRC_DIRS),$(wildcard $(dir)/*.c))
 GODDARD_C_FILES   := $(foreach dir,$(GODDARD_SRC_DIRS),$(wildcard $(dir)/*.c))
 ULTRA_S_FILES     := $(foreach dir,$(ULTRA_SRC_DIRS),$(wildcard $(dir)/*.s))
 LIBGCC_C_FILES    := $(foreach dir,$(LIBGCC_SRC_DIRS),$(wildcard $(dir)/*.c))
-GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c
+GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c \
+  $(addprefix $(BUILD_DIR)/bin/,$(addsuffix _skybox.c,$(notdir $(basename $(wildcard textures/skyboxes/*.png)))))
+
+ifeq ($(TARGET_NDS),1)
+  ULTRA_C_FILES := \
+    alBnkfNew.c \
+    guLookAtRef.c \
+    guMtxF2L.c \
+    guNormalize.c \
+    guOrthoF.c \
+    guPerspectiveF.c \
+    guRotateF.c \
+    guScaleF.c \
+    guTranslateF.c
+  ULTRA_C_FILES := $(addprefix lib/src/,$(ULTRA_C_FILES))
+
+  ARM7_C_FILES := $(foreach dir,$(ARM7_SRC_DIRS),$(wildcard $(dir)/*.c))
+  ARM7_O_FILES := $(foreach file,$(ARM7_C_FILES),$(BUILD_DIR)/arm7/$(file:.c=.o))
+
+  PNG_FILES := $(foreach dir,$(GFX_DIRS),$(wildcard $(dir)/*.png))
+  GFX_O_FILES := $(foreach file,$(PNG_FILES),$(BUILD_DIR)/gfx/$(file:.png=.o))
+endif
 
 # Sound files
 SOUND_BANK_FILES    := $(wildcard sound/sound_banks/*.json)
 SOUND_SAMPLE_DIRS   := $(wildcard sound/samples/*)
 SOUND_SAMPLE_AIFFS  := $(foreach dir,$(SOUND_SAMPLE_DIRS),$(wildcard $(dir)/*.aiff))
-SOUND_SAMPLE_TABLES := $(foreach file,$(SOUND_SAMPLE_AIFFS),$(BUILD_DIR)/$(file:.aiff=.table))
-SOUND_SAMPLE_AIFCS  := $(foreach file,$(SOUND_SAMPLE_AIFFS),$(BUILD_DIR)/$(file:.aiff=.aifc))
+ifeq ($(TARGET_NDS),1)
+  SOUND_SAMPLE_HALFS  := $(wildcard sound/samples/instruments/*.aiff) sound/samples/sfx_9/03.aiff
+  SOUND_SAMPLE_AIFCS  := $(foreach file,$(SOUND_SAMPLE_AIFFS),$(BUILD_DIR)/$(file:.aiff=.ima)) $(foreach file,$(SOUND_SAMPLE_HALFS),$(BUILD_DIR)/$(file:.aiff=.half.ima))
+else
+  SOUND_SAMPLE_TABLES := $(foreach file,$(SOUND_SAMPLE_AIFFS),$(BUILD_DIR)/$(file:.aiff=.table))
+  SOUND_SAMPLE_AIFCS  := $(foreach file,$(SOUND_SAMPLE_AIFFS),$(BUILD_DIR)/$(file:.aiff=.aifc))
+endif
 SOUND_SEQUENCE_DIRS := sound/sequences sound/sequences/$(VERSION)
 # all .m64 files in SOUND_SEQUENCE_DIRS, plus all .m64 files that are generated from .s files in SOUND_SEQUENCE_DIRS
 SOUND_SEQUENCE_FILES := \
@@ -246,8 +302,11 @@ SOUND_SEQUENCE_FILES := \
 
 # Object files
 O_FILES := $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file:.c=.o)) \
-           $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file:.s=.o)) \
            $(foreach file,$(GENERATED_C_FILES),$(file:.c=.o))
+
+ifneq ($(TARGET_NDS),1)
+  O_FILES += $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file:.s=.o))
+endif
 
 ULTRA_O_FILES := $(foreach file,$(ULTRA_S_FILES),$(BUILD_DIR)/$(file:.s=.o)) \
                  $(foreach file,$(ULTRA_C_FILES),$(BUILD_DIR)/$(file:.c=.o))
@@ -258,6 +317,10 @@ LIBGCC_O_FILES := $(foreach file,$(LIBGCC_C_FILES),$(BUILD_DIR)/$(file:.c=.o))
 
 # Automatic dependency files
 DEP_FILES := $(O_FILES:.o=.d) $(ULTRA_O_FILES:.o=.d) $(GODDARD_O_FILES:.o=.d) $(LIBGCC_O_FILES:.o=.d) $(BUILD_DIR)/$(LD_SCRIPT).d
+
+ifeq ($(TARGET_NDS),1)
+  DEP_FILES += $(ARM7_O_FILES:.o=.d)
+endif
 
 # Files with GLOBAL_ASM blocks
 ifeq ($(NON_MATCHING),0)
@@ -274,6 +337,15 @@ endif
 IQUE_EGCS_PATH := $(TOOLS_DIR)/ique_egcs
 IQUE_LD_PATH := $(TOOLS_DIR)/ique_ld
 
+ifeq ($(TARGET_NDS),1)
+AS        := $(DEVKITARM)/bin/arm-none-eabi-as
+CC        := $(DEVKITARM)/bin/arm-none-eabi-gcc
+CPP       := $(DEVKITARM)/bin/arm-none-eabi-cpp -P
+CXX       := $(DEVKITARM)/bin/arm-none-eabi-g++
+LD        := $(CXX)
+OBJDUMP   := $(DEVKITARM)/bin/arm-none-eabi-objdump
+OBJCOPY   := $(DEVKITARM)/bin/arm-none-eabi-objcopy
+else
 # detect prefix for MIPS toolchain
 ifneq      ($(call find-command,mips-linux-gnu-ld),)
   CROSS := mips-linux-gnu-
@@ -306,13 +378,17 @@ AR            := $(CROSS)ar
 OBJDUMP       := $(CROSS)objdump
 OBJCOPY       := $(CROSS)objcopy
 
+endif
+
 ifeq ($(TARGET_N64),1)
   TARGET_CFLAGS := -nostdinc -DTARGET_N64 -D_LANGUAGE_C
   CC_CFLAGS := -fno-builtin
 endif
 
 INCLUDE_DIRS := include $(BUILD_DIR) $(BUILD_DIR)/include src .
-ifeq ($(TARGET_N64),1)
+ifeq ($(TARGET_NDS),1)
+  INCLUDE_DIRS += $(addprefix $(BUILD_DIR)/gfx/,$(GFX_DIRS))
+else
   INCLUDE_DIRS += include/libc
 endif
 
@@ -329,6 +405,25 @@ else
 endif
 
 # Check code syntax with host compiler
+ifeq ($(TARGET_NDS),1)
+
+LIBDIRS := $(DEVKITPRO)/libnds
+TARGET_CFLAGS := -march=armv5te -mtune=arm946e-s -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion $(foreach dir,$(LIBDIRS),-I$(dir)/include) -DTARGET_NDS -DARM9 -D_LANGUAGE_C -DNO_SEGMENTED_MEMORY #-DEXTERNAL_DATA #-DENABLE_FPS
+ARM7_TARGET_CFLAGS := -mcpu=arm7tdmi -mtune=arm7tdmi -Wno-error=implicit-function-declaration $(foreach dir,$(LIBDIRS),-I$(dir)/include) -DTARGET_NDS -DARM7 -D_LANGUAGE_C
+
+CC_CHECK := $(CC)
+CC_CHECK_CFLAGS := -fsyntax-only -fsigned-char $(CC_CFLAGS) $(TARGET_CFLAGS) -Wall -Wextra -Wno-format-security -DNON_MATCHING -DAVOID_UB $(DEF_INC_CFLAGS)
+ARM7_CC_CHECK_CFLAGS := -fsyntax-only -fsigned-char $(CC_CFLAGS) $(ARM7_TARGET_CFLAGS) -Wall -Wextra -Wno-format-security $(DEF_INC_CFLAGS)
+
+ASFLAGS := $(foreach i,$(INCLUDE_DIRS),-I$(i)) $(foreach d,$(DEFINES),--defsym $(d))
+CFLAGS := -fno-strict-aliasing -fwrapv $(OPT_FLAGS) $(TARGET_CFLAGS) $(DEF_INC_CFLAGS)
+LDFLAGS := -lfat -lnds9 -specs=dsi_arm9.specs -g -mthumb -mthumb-interwork $(foreach dir,$(LIBDIRS),-L$(dir)/lib) $(TARGET_CFLAGS)
+
+ARM7_CFLAGS := -fno-strict-aliasing -fwrapv $(OPT_FLAGS) $(ARM7_TARGET_CFLAGS) $(DEF_INC_CFLAGS)
+ARM7_LDFLAGS := -lnds7 -specs=ds_arm7.specs -g -mthumb-interwork $(foreach dir,$(LIBDIRS),-L$(dir)/lib) $(ARM7_TARGET_CFLAGS)
+
+else
+
 CC_CHECK := gcc
 CC_CHECK_CFLAGS := -fsyntax-only -fsigned-char $(CC_CFLAGS) $(TARGET_CFLAGS) -std=gnu90 -Wall -Wextra -Wno-format-security -Wno-main -DNON_MATCHING -DAVOID_UB $(DEF_INC_CFLAGS)
 
@@ -354,6 +449,8 @@ endif
 # Prevent a crash with -sopt
 export LANG := C
 
+endif
+
 #==============================================================================#
 # Miscellaneous Tools                                                          #
 #==============================================================================#
@@ -369,6 +466,7 @@ VADPCM_ENC            := $(TOOLS_DIR)/vadpcm_enc
 EXTRACT_DATA_FOR_MIO  := $(TOOLS_DIR)/extract_data_for_mio
 SKYCONV               := $(TOOLS_DIR)/skyconv
 FLIPS                 := $(TOOLS_DIR)/flips
+ADPCM_XQ              := $(TOOLS_DIR)/adpcm_xq
 # Use the system installed armips if available. Otherwise use the one provided with this repository.
 ifneq (,$(call find-command,armips))
   RSPASM              := armips
@@ -451,6 +549,10 @@ $(BUILD_DIR)/bin/segment2.o: $(BUILD_DIR)/text/debug_text.raw.inc.c
 
 ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(GODDARD_SRC_DIRS) $(ULTRA_SRC_DIRS) $(ULTRA_BIN_DIRS) $(LIBGCC_SRC_DIRS) $(BIN_DIRS) $(TEXTURE_DIRS) $(TEXT_DIRS) $(SOUND_SAMPLE_DIRS) $(addprefix levels/,$(LEVEL_DIRS)) rsp include) $(MIO0_DIR) $(addprefix $(MIO0_DIR)/,$(VERSION)) $(SOUND_BIN_DIR) $(SOUND_BIN_DIR)/sequences/$(VERSION)
 
+ifeq ($(TARGET_NDS),1)
+  ALL_DIRS += $(addprefix $(BUILD_DIR)/arm7/,$(ARM7_SRC_DIRS)) $(addprefix $(BUILD_DIR)/gfx/,$(GFX_DIRS)) $(BUILD_DIR)/nitrofs
+endif
+
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
 
@@ -465,14 +567,18 @@ $(BUILD_DIR)/src/game/ingame_menu.o: $(BUILD_DIR)/include/text_strings.h
 #==============================================================================#
 TEXTURE_ENCODING := u8
 
+ifeq ($(TARGET_NDS),1)
+  TEXTURE_OPTIONS := -d
+endif
+
 # Convert PNGs to RGBA32, RGBA16, IA16, IA8, IA4, IA1, I8, I4 binary files
 $(BUILD_DIR)/%: %.png
 	$(call print,Converting:,$<,$@)
-	$(V)$(N64GRAPHICS) -s raw -i $@ -g $< -f $(lastword $(subst ., ,$@))
+	$(V)$(N64GRAPHICS) -s raw -i $@ -g $< -f $(lastword $(subst ., ,$@)) $(TEXTURE_OPTIONS)
 
 $(BUILD_DIR)/%.inc.c: %.png
 	$(call print,Converting:,$<,$@)
-	$(V)$(N64GRAPHICS) -s $(TEXTURE_ENCODING) -i $@ -g $< -f $(lastword ,$(subst ., ,$(basename $<)))
+	$(V)$(N64GRAPHICS) -s $(TEXTURE_ENCODING) -i $@ -g $< -f $(lastword ,$(subst ., ,$(basename $<))) $(TEXTURE_OPTIONS)
 
 # Color Index CI8
 $(BUILD_DIR)/%.ci8: %.ci8.png
@@ -489,6 +595,7 @@ $(BUILD_DIR)/%.ci4: %.ci4.png
 # Compressed Segment Generation                                                #
 #==============================================================================#
 
+ifeq ($(TARGET_N64),1)
 # Link segment file to resolve external labels
 # TODO: ideally this would be `-Trodata-segment=0x07000000` but that doesn't set the address
 $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o
@@ -517,12 +624,26 @@ $(BUILD_DIR)/%.mio0: $(BUILD_DIR)/%.bin
 $(BUILD_DIR)/%.mio0.o: $(BUILD_DIR)/%.mio0
 	$(call print,Converting MIO0 to ELF:,$<,$@)
 	$(V)$(LD) -r -b binary $< -o $@
-
+endif
 
 #==============================================================================#
 # Sound File Generation                                                        #
 #==============================================================================#
 
+ifeq ($(TARGET_NDS),1)
+$(BUILD_DIR)/%.half.wav: %.aiff
+	$(call print,Converting AIFF:,$<,$@)
+	$(V)$(SOX) $^ -r $(shell $(PYTHON) -c "print($(shell $(SOX) --i -r $^) / 2)") $@
+
+$(BUILD_DIR)/%.wav: %.aiff
+	$(call print,Converting AIFF:,$<,$@)
+	$(V)$(SOX) $^ $@
+
+$(BUILD_DIR)/%.ima: $(BUILD_DIR)/%.wav
+	$(call print,Encoding IMA:,$<,$@)
+	$(V)$(ADPCM_XQ) -y -q -r -b15 $^ $@
+
+else
 $(BUILD_DIR)/%.table: %.aiff
 	$(call print,Extracting codebook:,$<,$@)
 	$(V)$(AIFF_EXTRACT_CODEBOOK) $< >$@
@@ -530,6 +651,7 @@ $(BUILD_DIR)/%.table: %.aiff
 $(BUILD_DIR)/%.aifc: $(BUILD_DIR)/%.table %.aiff
 	$(call print,Encoding ADPCM:,$(word 2,$^),$@)
 	$(V)$(VADPCM_ENC) -c $^ $@
+endif
 
 $(ENDIAN_BITWIDTH): $(TOOLS_DIR)/determine-endian-bitwidth.c
 	@$(PRINT) "$(GREEN)Generating endian-bitwidth $(NO_COL)\n"
@@ -566,6 +688,11 @@ $(SOUND_BIN_DIR)/%.m64: $(SOUND_BIN_DIR)/%.o
 	$(call print,Converting to M64:,$<,$@)
 	$(V)$(OBJCOPY) -j .rodata $< -O binary $@
 
+ifeq ($(TARGET_NDS),1)
+$(BUILD_DIR)/nitrofs/%: $(SOUND_BIN_DIR)/%
+	$(call print,Copying to nitrofs:,$<,$@)
+	$(V)cp $< $@
+endif
 
 #==============================================================================#
 # Generated Source Code Files                                                  #
@@ -633,6 +760,20 @@ $(BUILD_DIR)/%.o: $(BUILD_DIR)/%.c
 	$(V)$(CC_CHECK) $(CC_CHECK_CFLAGS) -MMD -MP -MT $@ -MF $(BUILD_DIR)/$*.d $<
 	$(V)$(CC) -c $(CFLAGS) -o $@ $<
 
+ifeq ($(TARGET_NDS),1)
+$(BUILD_DIR)/arm7/%.o: %.c
+	$(call print,Compiling:,$<,$@)
+	$(V)$(CC_CHECK) $(ARM7_CC_CHECK_CFLAGS) -MMD -MP -MT $@ -MF $(BUILD_DIR)/arm7/$*.d $<
+	$(V)$(CC) -c $(ARM7_CFLAGS) -o $@ $<
+
+$(BUILD_DIR)/gfx/%.s: %.png %.grit
+	$(GRIT) $< -fts -o$(BUILD_DIR)/gfx/$*
+
+$(BUILD_DIR)/gfx/%.o: $(BUILD_DIR)/gfx/%.s
+	$(call print,Assembling:,$<,$@)
+	$(V)$(CPP) $(CPPFLAGS) $< | $(AS) $(ASFLAGS) -MD $(BUILD_DIR)/gfx/$*.d -o $@
+endif
+
 # Alternate compiler flags needed for matching
 ifeq ($(COMPILER),ido)
   $(BUILD_DIR)/levels/%/leveldata.o: OPT_FLAGS := -g
@@ -667,6 +808,11 @@ $(BUILD_DIR)/src/audio/%.copt: $(BUILD_DIR)/src/audio/%.acpp
 	$(COPT) -signed -I=$< -CMP=$@ -cp=i -scalaroptimize=1 $(COPTFLAGS)
 $(BUILD_DIR)/src/audio/seqplayer.copt: COPTFLAGS := -inline_manual
 
+# Assemble RSP assembly code
+$(BUILD_DIR)/rsp/%.bin $(BUILD_DIR)/rsp/%_data.bin: rsp/%.s
+	$(call print,Assembling:,$<,$@)
+	$(V)$(RSPASM) -sym $@.sym $(RSPASMFLAGS) -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
+
 endif
 
 # Assemble assembly code
@@ -674,10 +820,21 @@ $(BUILD_DIR)/%.o: %.s
 	$(call print,Assembling:,$<,$@)
 	$(V)$(CPP) $(CPPFLAGS) $< | $(AS) $(ASFLAGS) -MD $(BUILD_DIR)/$*.d -o $@
 
-# Assemble RSP assembly code
-$(BUILD_DIR)/rsp/%.bin $(BUILD_DIR)/rsp/%_data.bin: rsp/%.s
-	$(call print,Assembling:,$<,$@)
-	$(V)$(RSPASM) -sym $@.sym $(RSPASMFLAGS) -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
+# Build NDS ROM
+ifeq ($(TARGET_NDS),1)
+
+$(ARM7): $(ARM7_O_FILES)
+	@$(PRINT) "$(GREEN)Linking ARM7 binary:  $(BLUE)$@ $(NO_COL)\n"
+	$(V)$(LD) -L $(BUILD_DIR) -o $@ $(ARM7_O_FILES) $(ARM7_LDFLAGS)
+
+$(ARM9): $(GFX_O_FILES) $(O_FILES) $(MIO0_FILES:.mio0=.o) $(ULTRA_O_FILES) $(GODDARD_O_FILES)
+	@$(PRINT) "$(GREEN)Linking ARM9 binary:  $(BLUE)$@ $(NO_COL)\n"
+	$(V)$(LD) -L $(BUILD_DIR) -o $@ $(GFX_O_FILES) $(O_FILES) $(ULTRA_O_FILES) $(GODDARD_O_FILES) $(LDFLAGS)
+
+$(ROM): $(ARM7) $(ARM9) icon.bmp $(BUILD_DIR)/nitrofs/sound_data.ctl $(BUILD_DIR)/nitrofs/sound_data.tbl $(BUILD_DIR)/nitrofs/sequences.bin $(BUILD_DIR)/nitrofs/bank_sets
+	@$(PRINT) "$(GREEN)Building ROM: $(BLUE)$@ $(NO_COL)\n"
+	$(V)$(NDSTOOL) -c $@ -9 $(ARM9) -7 $(ARM7) -g SHOW 96 SHOWFLOOR 1 -b icon.bmp "showfloor;96flashbacks Team;github.com/96flashbacks/showfloor" #-d $(BUILD_DIR)/nitrofs
+else
 
 # Run linker script through the C preprocessor
 $(BUILD_DIR)/$(LD_SCRIPT): $(LD_SCRIPT)
@@ -706,7 +863,7 @@ $(ELF): $(O_FILES) $(MIO0_OBJ_FILES) $(SEG_FILES) $(BUILD_DIR)/$(LD_SCRIPT) unde
 	$(V)$(LD) -L $(BUILD_DIR) -T undefined_syms.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(BUILD_DIR)/sm64.$(VERSION).map --no-check-sections $(addprefix -R ,$(SEG_FILES)) -o $@ $(O_FILES) -lultra -lgoddard -lgcc
 
 # Build ROM
-PAD_TO_GAP_FILL := --pad-to=0x800000 --gap-fill=0xFF
+PAD_TO_GAP_FILL := 
 
 $(ROM): $(ELF)
 	$(call print,Building ROM:,$<,$@)
@@ -716,6 +873,7 @@ $(ROM): $(ELF)
 $(BUILD_DIR)/$(TARGET).objdump: $(ELF)
 	$(OBJDUMP) -D $< > $@
 
+endif
 
 
 .PHONY: all clean distclean default diff test load libultra

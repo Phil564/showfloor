@@ -5,6 +5,12 @@
 #include "data.h"
 #include "seqplayer.h"
 
+#ifdef TARGET_NDS
+#define NDS_ITCM_CODE __attribute__((section(".itcm")))
+#else
+#define NDS_ITCM_CODE
+#endif
+
 #define US_FLOAT2(x) x##.0
 
 static void sequence_channel_process_sound(struct SequenceChannel *seqChannel) {
@@ -31,7 +37,7 @@ static void sequence_channel_process_sound(struct SequenceChannel *seqChannel) {
     }
 }
 
-void sequence_player_process_sound(struct SequencePlayer *seqPlayer) {
+NDS_ITCM_CODE void sequence_player_process_sound(struct SequencePlayer *seqPlayer) {
     s32 i;
 
     if (seqPlayer->fadeRemainingFrames != 0) {

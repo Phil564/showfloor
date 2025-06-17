@@ -398,10 +398,12 @@ void decrease_reverb_gain(void) {
  */
 void wait_for_audio_frames(s32 frames) {
     gAudioFrameCount = 0;
+#ifdef TARGET_N64
     // Sound thread will update gAudioFrameCount
     while (gAudioFrameCount < frames) {
         // spin
     }
+#endif
 }
 
 void audio_reset_session(struct AudioSessionSettings *preset) {
@@ -539,6 +541,10 @@ void audio_reset_session(struct AudioSessionSettings *preset) {
     }
 
     gNotes = soundAlloc(&gNotesAndBuffersPool, gMaxSimultaneousNotes * sizeof(struct Note));
+#ifdef TARGET_NDS
+    // Point to the uncached RAM mirror so both CPUs can access the data reliably
+    gNotes = (struct Note*)((u32)gNotes + 0xA000000);
+#endif
     note_init_all();
     init_note_free_list();
 

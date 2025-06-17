@@ -19,6 +19,12 @@
 #include "segment2.h"
 #include "segment_symbols.h"
 
+#ifdef TARGET_NDS
+#define NDS_ITCM_CODE __attribute__((section(".itcm")))
+#else
+#define NDS_ITCM_CODE
+#endif
+
 // First 3 controller slots
 struct Controller gControllers[3];
 
@@ -523,7 +529,7 @@ void setup_game_memory(void) {
 /**
  * Main game loop thread. Runs forever as long as the game continues.
  */
-void thread5_game_loop(UNUSED void *arg) {
+NDS_ITCM_CODE void thread5_game_loop(UNUSED void *arg) {
     struct LevelCommand *addr;
 
     CN_DEBUG_PRINTF(("start gfx thread\n"));

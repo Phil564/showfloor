@@ -375,6 +375,7 @@ void dispatch_audio_sptask(struct SPTask *spTask) {
     }
 }
 
+#ifndef TARGET_NDS
 void exec_display_list(struct SPTask *spTask) {
     if (spTask != NULL) {
         osWritebackDCacheAll();
@@ -388,6 +389,7 @@ void exec_display_list(struct SPTask *spTask) {
         }
     }
 }
+#endif
 
 void turn_on_audio(void) {
     sAudioEnabled = TRUE;

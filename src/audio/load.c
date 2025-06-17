@@ -704,10 +704,26 @@ void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync) {
     seqPlayer->scriptState.pc = sequenceData;
 }
 
+#ifdef EXTERNAL_DATA
+# define LOAD_DATA(x) load_sound_res((const char *)x)
+# include <stdio.h>
+# include <stdlib.h>
+extern static void fs_load_file(const char *vpath, int *outsize)
+static inline void *load_sound_res(const char *path) {
+    void *data = fs_load_file(path, NULL);
+    if (!data) sys_fatal("could not load sound data from '%s'", path);
+    // FIXME: figure out where it is safe to free this shit
+    //        can't free it immediately after in audio_init()
+    return data;
+}
+#else
+# define LOAD_DATA(x) x
+#endif
+
 // (void) must be omitted from parameters to fix stack with -framepointer
 void audio_init() {
     UNUSED s8 pad[32];
-    u8 buf[0x10];
+    u8 buf[0x10]; // buf unused in EXTERNAL_DATA
     s32 i, j, k;
     UNUSED s32 lim1; // lim1 unused in EU
     s32 lim2, lim3;
@@ -782,6 +798,7 @@ void audio_init() {
     eu_stubbed_printf_3("Heap %x %x %x\n", 0, 0, 0);
     eu_stubbed_printf_0("Main Heap Initialize.\n");
 
+#ifndef EXTERNAL_DATA
     // Load headers for sounds and sequences
     gSeqFileHeader = (ALSeqFile *) buf;
     data = gMusicData;
@@ -815,6 +832,28 @@ void audio_init() {
     // Load bank sets for each sequence
     gAlBankSets = soundAlloc(&gAudioInitPool, 0x100);
     audio_dma_copy_immediate((uintptr_t) gBankSetsData, gAlBankSets, 0x100);
+#else
+    // Load headers for sounds and sequences
+    data = LOAD_DATA(gMusicData);
+    gSeqFileHeader = data;
+
+    alSeqFileNew(gSeqFileHeader, data);
+    gSequenceCount = gSeqFileHeader->seqCount;
+
+    // Load header for CTL (instrument metadata)
+    data = LOAD_DATA(gSoundDataADSR);
+    gAlCtlHeader = data;
+    alSeqFileNew(gAlCtlHeader, data);
+    gCtlEntries = malloc(gAlCtlHeader->seqCount * sizeof(struct CtlEntry));
+
+    // Load header for TBL
+    data = LOAD_DATA(gSoundDataRaw);
+    gAlTbl = data;
+    alSeqFileNew(gAlTbl, data);
+
+    // Load bank sets for each sequence
+    gAlBankSets = LOAD_DATA(gBankSetsData);
+#endif
 
     init_sequence_players();
     gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;

@@ -15,6 +15,12 @@
 #define PORTAMENTO_MODE_4 4
 #define PORTAMENTO_MODE_5 5
 
+#ifdef TARGET_NDS
+#define NDS_ITCM_CODE __attribute__((section(".itcm")))
+#else
+#define NDS_ITCM_CODE
+#endif
+
 void seq_channel_layer_process_script(struct SequenceChannelLayer *layer);
 void sequence_channel_process_script(struct SequenceChannel *seqChannel);
 u8 get_instrument(struct SequenceChannel *seqChannel, u8 instId, struct Instrument **instOut,
@@ -739,7 +745,7 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
     }
 }
 
-void sequence_player_process_sequence(struct SequencePlayer *seqPlayer) {
+NDS_ITCM_CODE void sequence_player_process_sequence(struct SequencePlayer *seqPlayer) {
     u8 cmd;
     u8 loBits;
     u8 temp;
@@ -1063,7 +1069,9 @@ void process_sequences(UNUSED s32 iterationsRemaining) {
             sequence_player_process_sound(gSequencePlayers + i);
         }
     }
+#if !defined(TARGET_NDS)
     reclaim_notes();
+#endif
     process_notes();
 }
 

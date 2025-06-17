@@ -27,6 +27,9 @@ aifc_decode_SOURCES := aifc_decode.c
 
 aiff_extract_codebook_SOURCES := aiff_extract_codebook.c
 
+adpcm_xq_SOURCES := adpcm-xq/adpcm-xq.c adpcm-xq/adpcm-lib.c
+adpcm_xq_CFLAGS := -Iadpcm-xq
+
 tabledesign: $(LIBAUDIOFILE)
 tabledesign_SOURCES := sdk-tools/tabledesign/codebook.c sdk-tools/tabledesign/estimate.c sdk-tools/tabledesign/print.c sdk-tools/tabledesign/tabledesign.c
 tabledesign_CFLAGS  := -Iaudiofile -Wno-uninitialized
@@ -48,7 +51,7 @@ ifeq ($(HOST_ENV),MinGW)
 endif
 
 ifeq ($(shell uname -s),Linux)
-  BUILD_PROGRAMS += flips
+  BUILD_PROGRAMS += flips adpcm_xq
 endif
 
 flips: CC := $(CXX)

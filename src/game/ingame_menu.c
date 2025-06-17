@@ -220,8 +220,11 @@ static u8 *alloc_ia8_text_from_i1(u16 *in, s16 width, s16 height) {
 void render_generic_char(u8 c) {
     void **fontLUT = segmented_to_virtual(main_font_lut);
     void *packedTexture = segmented_to_virtual(fontLUT[c]);
+#if !defined(TARGET_NDS)
     void *unpackedTexture = alloc_ia8_text_from_i1(packedTexture, 8, 16);
-
+#else
+	void *unpackedTexture = packedTexture;
+#endif
     gDPPipeSync(gDisplayListHead++);
     gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_IA, G_IM_SIZ_8b, 1,
                        VIRTUAL_TO_PHYSICAL(unpackedTexture));
