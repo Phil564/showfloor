@@ -39,7 +39,7 @@ jobs:
             
             Builds from other branches are also available under this pre-release. The latest build is `${{github.event.repository.name}}-${{github.ref_name}}.bps`.
             
-            Please note that there may be breaking changes in these builds, and that they aren't recommanded for regular play sessions.
+            Please note that there may be breaking changes in these builds, and that they aren't recommended for regular play sessions.
             
             Commit message from latest build:
             ${{github.event.head_commit.message}}

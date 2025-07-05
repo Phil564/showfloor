@@ -29,6 +29,7 @@ static u8 sBgMusicDisabled = FALSE;
 static u16 sCurrentMusic = MUSIC_NONE;
 static u16 sCurrentShellMusic = MUSIC_NONE;
 static u16 sCurrentCapMusic = MUSIC_NONE;
+static u8 sPlayingBowserHallway = FALSE;
 UNUSED static u8 unused8032C6D8[16] = { 0 };
 static s16 sSoundMenuModeToSoundMode[] = { SOUND_MODE_STEREO, SOUND_MODE_MONO, SOUND_MODE_HEADSET };
 // Only the 20th array element is used.
@@ -186,6 +187,28 @@ void play_painting_eject_sound(void) {
         sPaintingEjectSoundPlayed = TRUE;
     } else {
         sPaintingEjectSoundPlayed = FALSE;
+    }
+}
+
+void play_bowser_hallway_music(void) {
+    u8 shouldPlay = FALSE;
+
+    /* Bowser Hallway? */
+    if (gCurrLevelNum == LEVEL_CASTLE) {
+        if (gMarioState->floor != NULL && gMarioState->floor->room == 5) {
+            if (gMarioState->pos[2] > -1472.0f) {
+                shouldPlay = TRUE;
+            }
+        }
+    }
+
+    if (sPlayingBowserHallway ^ shouldPlay) {
+        sPlayingBowserHallway = shouldPlay;
+        if (shouldPlay) {
+            play_secondary_music(0x23, 0x4B, 0xFF, 0);
+        } else {
+            func_80321080(1200);
+        }
     }
 }
 

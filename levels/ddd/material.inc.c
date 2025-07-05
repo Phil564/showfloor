@@ -24,10 +24,6 @@ Lights1 water_land_RockyWallMaterialVariation4_lights = gdSPDefLights1(
 	0x1B, 0x1B, 0x1B,
 	0x44, 0x44, 0x44, 0x28, 0x28, 0x28);
 
-Lights1 water_land_RockyWallMaterialVariation5_lights = gdSPDefLights1(
-	0x0, 0x0, 0x0,
-	0x0, 0x0, 0x0, 0x28, 0x28, 0x28);
-
 Lights1 submarine_SubmarineMetalMaterial_Variation1_lights = gdSPDefLights1(
 	0x3F, 0x1E, 0x19,
 	0xFE, 0x7E, 0x65, 0x28, 0x28, 0x28);
@@ -151,20 +147,6 @@ Gfx mat_water_land_RockyWallMaterialVariation3[] = {
 Gfx mat_revert_water_land_RockyWallMaterialVariation3[] = {
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_water_land_RockyWallMaterialVariation5[] = {
-	gsSPSetLights1(water_land_RockyWallMaterialVariation5_lights),
-	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
-	gsDPSetAlphaDither(G_AD_NOISE),
-	gsSPTexture(65535, 65535, 0, 0, 1),
-	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, water_09003800),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadBlock(7, 0, 0, 1023, 256),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 0),
-	gsDPSetTileSize(0, 0, 0, 252, 124),
 	gsSPEndDisplayList(),
 };
 

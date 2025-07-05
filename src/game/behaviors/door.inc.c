@@ -30,15 +30,8 @@ void play_door_open_noise(void) {
         cur_obj_play_sound_2(SOUND_GENERAL_OPEN_WOOD_DOOR);
         gTimeStopState |= TIME_STOP_MARIO_OPENED_DOOR;
     }
-    if (o->oTimer == 50) {
-        if (o->oBhvParams2ndByte == 1)
-            play_secondary_music(0x23, 0x4B, 0xFF, 0);
-        else if (o->oBhvParams2ndByte == 2)
-            play_secondary_music(0x24, 0x4B, 0xFF, 0);
-    }
     if (o->oTimer == 70) {
         cur_obj_play_sound_2(SOUND_GENERAL_CLOSE_WOOD_DOOR);
-        func_80321080(2000);
     }
 }
 

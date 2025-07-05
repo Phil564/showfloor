@@ -1010,7 +1010,7 @@ Gfx water_land_3_dl_mesh[] = {
 	gsSPDisplayList(mat_water_land_MetalWallMaterial),
 	gsSPDisplayList(water_land_3_dl_mesh_tri_5),
 	gsSPDisplayList(mat_revert_water_land_MetalWallMaterial),
-	gsSPDisplayList(mat_water_land_RockyWallMaterialVariation5),
+	gsSPDisplayList(mat_water_land_RockyWallMaterialVariation4),
 	gsSPDisplayList(water_land_3_dl_mesh_tri_6),
 	gsSPDisplayList(mat_revert_water_land_RockyWallMaterialVariation5),
 	gsSPDisplayList(mat_water_land_RockyWallMaterialVariation4),
