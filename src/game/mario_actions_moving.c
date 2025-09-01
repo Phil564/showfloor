@@ -1351,7 +1351,7 @@ s32 act_hard_backward_ground_kb(struct MarioState *m) {
         set_mario_action(m, ACT_DEATH_ON_BACK, 0);
     }
 
-    if (animFrame == 69) {
+    if (animFrame == 82) {
         play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_LANDING);
     }
 
@@ -1389,7 +1389,7 @@ s32 act_soft_forward_ground_kb(struct MarioState *m) {
 
 s32 act_ground_bonk(struct MarioState *m) {
     s32 animFrame = common_ground_knockback_action(m, MARIO_ANIM_GROUND_BONK, 32, TRUE);
-    if (animFrame == 32) {
+    if (animFrame == 41) {
         play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
     }
     return FALSE;
@@ -1403,7 +1403,7 @@ s32 act_death_exit_land(struct MarioState *m) {
 
     animFrame = set_mario_animation(m, MARIO_ANIM_FALL_OVER_BACKWARDS);
 
-    if (animFrame == 68) {
+    if (animFrame == 82) {
         play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
     }
 

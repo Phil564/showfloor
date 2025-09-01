@@ -432,6 +432,7 @@ s32 launch_mario_until_land(struct MarioState *m, s32 endAction, s32 animation, 
     if (airStepLanded) {
         if (m->action == ACT_EXIT_AIRBORNE || m->action == ACT_SPECIAL_EXIT_AIRBORNE) {
             m->faceAngle[1] += 0x7FFF;
+            m->forwardVel = 8.0f;
         }
 
         set_mario_action(m, endAction, 0);
@@ -701,10 +702,16 @@ s32 act_falling_exit_airborne(struct MarioState *m) {
 }
 
 s32 act_exit_land_save_dialog(struct MarioState *m) {
-    stationary_ground_step(m);
+    perform_ground_step(m);
+    mario_set_forward_vel(m, m->forwardVel * 2);
     play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_LANDING);
-    set_mario_animation(m, MARIO_ANIM_GENERAL_LAND);
+    set_mario_animation(m, m->actionArg == 0 ? MARIO_ANIM_GENERAL_LAND
+                                                     : MARIO_ANIM_LAND_FROM_SINGLE_JUMP);
 
+    if (is_anim_past_frame(m, 11) || is_anim_past_frame(m, 24)) {
+        stationary_ground_step(m);
+    }
+                                        
     if (is_anim_past_end(m)) {
         set_mario_action(m, ACT_IDLE, 0);
     }
@@ -975,31 +982,6 @@ s32 act_teleport_fade_in(struct MarioState *m) {
     return FALSE;
 }
 
-s32 act_shocked(struct MarioState *m) {
-    play_sound_if_no_flag(m, SOUND_MARIO_WAAAOOOW, MARIO_ACTION_SOUND_PLAYED);
-    play_sound(SOUND_MOVING_SHOCKED, m->marioObj->header.gfx.cameraToObject);
-
-    if (set_mario_animation(m, MARIO_ANIM_SHOCKED) == 0) {
-        m->actionTimer++;
-        m->flags |= MARIO_METAL_SHOCK;
-    }
-
-    if (m->actionArg == 0) {
-        mario_set_forward_vel(m, 0.0f);
-        if (perform_air_step(m, 1) == AIR_STEP_LANDED) {
-            play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
-            m->actionArg = 1;
-        }
-    } else {
-        if (m->actionTimer >= 6) {
-            set_mario_action(m, m->health < 0x0100 ? ACT_ELECTROCUTION : ACT_IDLE, 0);
-        }
-        stop_and_set_height_to_floor(m);
-    }
-
-    return FALSE;
-}
-
 s32 act_squished(struct MarioState *m) {
     UNUSED u8 filler[4];
     f32 squishAmount;
@@ -1116,12 +1098,16 @@ static void intro_cutscene_wait_for_dialog(struct MarioState *m) {
         m->statusForCamera->cameraEvent = CAM_EVENT_START_INTRO;
     }
 
-    if (m->actionTimer == 90) {
+    if (m->actionTimer == 75) {
         create_dialog_box(33);
-    } else if (m->actionTimer >= 90 && get_dialog_id() != -1) {
+    } else if (m->actionTimer >= 75 && gMenuState < 3 && gDialogBoxAngle < 65.0f) {
         set_anim_to_frame(m, m->marioObj->header.gfx.animInfo.animFrame);
-    } else if (m->actionTimer >= 90 && get_dialog_id() == -1) {
-        advance_cutscene_step(m);
+    } else if (m->actionTimer >= 75 && gMenuState == 3) {
+        if (gDialogBoxAngle < 30.0f) {
+            set_anim_to_frame(m, m->marioObj->header.gfx.animInfo.animFrame);
+        } else {
+            advance_cutscene_step(m);
+        }
     }
 
     stop_and_set_height_to_floor(m);
@@ -1195,7 +1181,6 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_BBH_ENTER_SPIN:             cancel = act_bbh_enter_spin(m);             break;
         case ACT_TELEPORT_FADE_OUT:          cancel = act_teleport_fade_out(m);          break;
         case ACT_TELEPORT_FADE_IN:           cancel = act_teleport_fade_in(m);           break;
-        case ACT_SHOCKED:                    cancel = act_shocked(m);                    break;
         case ACT_SQUISHED:                   cancel = act_squished(m);                   break;
     }
     /* clang-format on */

@@ -322,7 +322,7 @@ sound_ref .sound_action_stuck_in_ground_sand
 sound_ref .sound_action_metal_jump_water
 sound_ref .sound_action_metal_land_water
 sound_ref .sound_action_metal_step_water
-sound_ref .chan_731
+sound_ref .sound_action_swimming_idle
 sound_ref .chan_743
 sound_ref .chan_756
 sound_ref .sound_action_flying_fast
@@ -458,7 +458,7 @@ layer_end
 
 .sound_action_landing_water:
 chan_setbank 2
-chan_setinstr 4
+chan_setinstr 5
 chan_setlayer 0, .layer_2CC
 chan_end
 
@@ -1216,16 +1216,14 @@ layer_portamento 0x85, 18, 255
 layer_note1 22, 0x15, 90
 layer_end
 
-.chan_731:
-chan_setbank 1
-chan_setinstr 7
-chan_setenvelope .envelope_3314
+.sound_action_swimming_idle:
+chan_setbank 2
+chan_setinstr 6
 chan_setlayer 0, .layer_73C
 chan_end
 
 .layer_73C:
-layer_note1 11, 0xf, 90
-layer_note1 15, 0x1f, 90
+layer_note1 39, 0x32, 120
 layer_end
 
 .chan_743:
@@ -1998,8 +1996,6 @@ chan_setlayer 0, .layer_C7C
 chan_end
 
 .layer_C7C:
-layer_somethingon
-layer_portamento 0x82, 40, 255
 layer_note1 41, 0x6f, 110
 layer_end
 

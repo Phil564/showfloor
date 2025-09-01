@@ -536,36 +536,11 @@ s32 act_stop_crawling(struct MarioState *m) {
 }
 
 s32 act_shockwave_bounce(struct MarioState *m) {
-    s16 sp1E;
-    f32 sp18;
-
-    if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_SHOCKWAVE) {
-        return hurt_and_set_mario_action(m, ACT_SHOCKED, 0, 4);
-    }
-
     if (m->actionTimer == 0) {
         if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_KNOCKBACK_DMG) {
             return hurt_and_set_mario_action(m, ACT_BACKWARD_GROUND_KB, 0, 0xc);
         }
     }
-
-    if (++m->actionTimer == 48) {
-        return set_mario_action(m, ACT_IDLE, 0);
-    }
-
-    sp1E = (m->actionTimer % 16) << 12;
-    sp18 = (f32) (((f32) (6 - m->actionTimer / 8) * 8.0f) + 4.0f);
-    mario_set_forward_vel(m, 0);
-    vec3f_set(m->vel, 0.0f, 0.0f, 0.0f);
-    if (sins(sp1E) >= 0.0f) {
-        m->pos[1] = sins(sp1E) * sp18 + m->floorHeight;
-    } else {
-        m->pos[1] = m->floorHeight - sins(sp1E) * sp18;
-    }
-
-    vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
-    set_mario_animation(m, MARIO_ANIM_A_POSE);
     return FALSE;
 }
 

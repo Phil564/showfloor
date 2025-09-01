@@ -1354,7 +1354,7 @@ s32 update_boss_fight_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
         heldState = 0;
     }
 
-    focusDistance = calc_abs_dist(sMarioCamState->pos, secondFocus) * 1.6f;
+    focusDistance = calc_abs_dist(sMarioCamState->pos, secondFocus) * 1.5f;
     if (focusDistance < 800.f) {
         focusDistance = 800.f;
     }
@@ -5404,9 +5404,9 @@ BAD_RETURN(s32) cutscene_bowser_arena_pan_left(UNUSED struct Camera *c) {
  * which is relative to the unaltered camera position when entering the arena.
  */
 BAD_RETURN(s32) cutscene_enter_bowser_arena_init(UNUSED struct Camera *c) {
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, 0x7A12);
-    c->pos[1] += 50.0f;
-    c->pos[2] -= 60.0f;
+    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, 0x7B12);
+    c->pos[1] += 60.0f;
+    c->pos[2] -= 45.0f;
 
     vec3f_copy(sCutsceneVars[0].point, c->pos); // save position
 }
@@ -5416,7 +5416,23 @@ BAD_RETURN(s32) cutscene_enter_bowser_arena_init(UNUSED struct Camera *c) {
  * height.
  */
 BAD_RETURN(s32) cutscene_enter_bowser_arena_follow_mario(struct Camera *c) {
+    Vec3f rotatedPos;
+    f32 baseDist;
+    s16 basePitch, baseYaw, finalYaw;
+
+    mode_boss_fight_camera(c);
+
+    vec3f_get_dist_and_angle(sMarioCamState->pos, sCutsceneVars[0].point, &baseDist, &basePitch, &baseYaw);
+
+    finalYaw = baseYaw + (sModeOffsetYaw * 4);
+
+    vec3f_set_dist_and_angle(sMarioCamState->pos, rotatedPos, baseDist, basePitch, finalYaw);
+    vec3f_copy(c->pos, rotatedPos);
+
+    c->focus[0] = sMarioCamState->pos[0];
     c->focus[1] = gMarioState->pos[1] + gMarioObject->hitboxHeight;
+    c->focus[2] = sMarioCamState->pos[2];
+
 }
 
 /**
@@ -5425,7 +5441,7 @@ BAD_RETURN(s32) cutscene_enter_bowser_arena_follow_mario(struct Camera *c) {
 BAD_RETURN(s32) cutscene_enter_bowser_arena_end(struct Camera *c) {
     c->cutscene = 0;
     transition_next_state(c, 3);
-    sModeOffsetYaw = 0x256;
+    sModeOffsetYaw = 0;
     gSecondCameraFocus->oBowserCamAct = 2;
 }
 // fix this
@@ -5434,40 +5450,8 @@ BAD_RETURN(s32) cutscene_enter_bowser_arena_end(struct Camera *c) {
  * Cutscene that plays when mario enters a bowser fight.
  */
 BAD_RETURN(s32) cutscene_enter_bowser_arena(struct Camera *c) {
-    Vec3f rotatedPos;
-    f32 baseDist;
-    s16 basePitch, baseYaw;
-	
     cutscene_event(cutscene_enter_bowser_arena_init, c, 0, 0);
     cutscene_event(cutscene_enter_bowser_arena_follow_mario, c, 0, 83);
-
-    handle_c_button_movement(c);
-    if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
-        s8DirModeYawOffset -= DEGREES(45);
-        play_sound_cbutton_side();
-    }
-    if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
-        s8DirModeYawOffset += DEGREES(45); 
-        play_sound_cbutton_side();
-    }
-
-    s8DirModeYawOffset &= 0xFFFF;
-
-    vec3f_get_dist_and_angle(sMarioCamState->pos, sCutsceneVars[0].point, &baseDist, &basePitch, &baseYaw);
-
-    c->focus[0] = sMarioCamState->pos[0];
-    c->focus[1] = gMarioState->pos[1] + gMarioObject->hitboxHeight;
-    c->focus[2] = sMarioCamState->pos[2];
-
-    c->nextYaw = baseYaw + s8DirModeYawOffset;
-
-    vec3f_set_dist_and_angle(sMarioCamState->pos, rotatedPos, baseDist, basePitch, c->nextYaw);
-    vec3f_copy(c->pos, rotatedPos);
-
-    c->focus[0] = sMarioCamState->pos[0];
-    c->focus[1] = gMarioState->pos[1] + gMarioObject->hitboxHeight;
-    c->focus[2] = sMarioCamState->pos[2];
-
 }
 
 /**
@@ -6033,6 +6017,7 @@ BAD_RETURN(s32) cutscene_intro_rotate_camera(struct Camera *c) {
 
 BAD_RETURN(s32) cutscene_intro_zoom(struct Camera *c) {
     sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
+    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0xF, 0);
     c->pos[1] += 0.225f;
     c->pos[2] -= 1.0f;
 }
@@ -6044,7 +6029,7 @@ BAD_RETURN(s32) cutscene_intro(struct Camera *c) {
 }
 
 BAD_RETURN(s32) cutscene_intro_end(struct Camera *c) {
-    if (get_dialog_id() == -1) {
+    if (gMenuState == 3 && gDialogBoxAngle == 30.0f) {
         vec3f_copy(gLakituState.goalPos, c->pos);
         vec3f_copy(gLakituState.goalFocus, c->focus);
         sStatusFlags |= (CAM_FLAG_SMOOTH_MOVEMENT | CAM_FLAG_UNUSED_CUTSCENE_ACTIVE);
