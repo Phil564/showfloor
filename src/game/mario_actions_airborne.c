@@ -246,7 +246,7 @@ void update_flying_pitch(struct MarioState *m) {
                 m->angleVel[0] = 0x20;
             }
         } else {
-            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x20, 0x40);
+            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x40, 0x40);
         }
     } else if (targetPitchVel < 0) {
         if (m->angleVel[0] > 0) {
@@ -255,7 +255,7 @@ void update_flying_pitch(struct MarioState *m) {
                 m->angleVel[0] = -0x20;
             }
         } else {
-            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x40, 0x20);
+            m->angleVel[0] = approach_s32(m->angleVel[0], targetPitchVel, 0x40, 0x40);
         }
     } else {
         m->angleVel[0] = approach_s32(m->angleVel[0], 0, 0x40, 0x40);
@@ -268,19 +268,27 @@ void update_flying(struct MarioState *m) {
     update_flying_pitch(m);
     update_flying_yaw(m);
 
-    m->forwardVel -= 2.0f * ((f32) m->faceAngle[0] / 0x4000) + 0.1f;
-    m->forwardVel -= 0.5f * (1.0f - coss(m->angleVel[1]));
+    m->forwardVel -= ((f32) m->faceAngle[0] / 0x4000) + 0.1f;
+    m->forwardVel -= (1.0f - coss(m->angleVel[1]));
 
     if (m->forwardVel < 0.0f) {
         m->forwardVel = 0.0f;
     }
 
-    if (m->forwardVel > 16.0f) {
-        m->faceAngle[0] += (m->forwardVel - 32.0f) * 6.0f;
-    } else if (m->forwardVel > 4.0f) {
-        m->faceAngle[0] += (m->forwardVel - 32.0f) * 10.0f;
+    if (!(m->actionTimer < 3)) {
+        if (m->forwardVel > 16.0f) {
+            m->faceAngle[0] += (m->forwardVel - 32.0f) * 6.0f;
+        } else if (m->forwardVel > 4.0f) {
+            m->faceAngle[0] += (m->forwardVel - 32.0f) * 10.0f;
+        } else {
+            m->faceAngle[0] -= 0x400;
+        }
     } else {
-        m->faceAngle[0] -= 0x400;
+        if (m->forwardVel > 16.0f) {
+            m->faceAngle[0] += (m->forwardVel - 32.0f) * 6.0f;
+        } else if (m->forwardVel < 16.0f) {
+            m->faceAngle[0] += (m->forwardVel - 32.0f) * 100.0f;
+        }
     }
 
     m->faceAngle[0] += m->angleVel[0];
@@ -1283,7 +1291,7 @@ s32 act_shot_from_cannon(struct MarioState *m) {
         set_mario_action(m, ACT_FLYING, 0);
     }
 
-	if ((m->forwardVel -= 0.05) < 0.0f) {
+	if ((m->forwardVel -= 0.1) < 0.0f) {
         mario_set_forward_vel(m, 0.0f);
     }
 
