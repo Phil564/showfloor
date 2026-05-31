@@ -143,7 +143,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_IDLE, 0);
             break;
         case MARIO_SPAWN_AIRBORNE:
-            set_mario_action(m, ACT_SPAWN_NO_SPIN_AIRBORNE, 0);
+            set_mario_action(m, ACT_IDLE, 0);
             break;
         case MARIO_SPAWN_HARD_AIR_KNOCKBACK:
             set_mario_action(m, ACT_HARD_BACKWARD_AIR_KB, 0);
