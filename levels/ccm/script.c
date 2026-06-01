@@ -78,7 +78,7 @@ const LevelScript level_ccm_entry[] = {
     AREA(/*index*/ 1, snow_slider_geo),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  1846,  5420, -1641, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x000A0000, /*bhv*/ bhvSpinAirborneWarp),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  7987, -3993,  4638, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00140000, /*bhv*/ bhvWarp),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/  2868,  4220,  -204, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x0F1E0000, /*bhv*/ bhvWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/  2868,  4320,  -204, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x0F1E0000, /*bhv*/ bhvWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_CCM,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_14,      /*destLevel*/ LEVEL_CCM,    /*destArea*/ 1, /*destNode*/ WARP_NODE_1E, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_1E,      /*destLevel*/ LEVEL_CCM,    /*destArea*/ 2, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
