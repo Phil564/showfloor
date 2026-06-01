@@ -1541,7 +1541,7 @@ chan_end
 layer_delay 1
 layer_somethingon
 .layer_9AB:
-layer_note1 58, 0x12c, 86
+layer_note1 58, 0x12c, 105
 layer_jump .layer_9AB
 layer_end
 
