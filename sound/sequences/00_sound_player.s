@@ -4558,7 +4558,6 @@ chan_setlayer 0, .layer_2061
 chan_end
 
 .layer_2061:
-layer_portamento 0x81, 38, 255
 layer_note1 39, 0xd2, 127
 layer_end
 
