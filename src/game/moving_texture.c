@@ -178,13 +178,13 @@ Gfx *geo_wdw_set_initial_water_level(s32 callContext, UNUSED struct GraphNode *n
  * This ensures water / sand flow stops when the game pauses.
  */
 Gfx *geo_movtex_pause_control(s32 callContext, UNUSED struct GraphNode *node, UNUSED Mat4 mtx) {
-    if (callContext != GEO_CONTEXT_RENDER) {
+    /*if (callContext != GEO_CONTEXT_RENDER) {
         gMovtexCounterPrev = gAreaUpdateCounter - 1;
         gMovtexCounter = gAreaUpdateCounter;
     } else {
         gMovtexCounterPrev = gMovtexCounter;
         gMovtexCounter = gAreaUpdateCounter;
-    }
+    }*/
     return NULL;
 }
 
