@@ -1482,6 +1482,7 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     f32 maxDist = 1000.f;
     f32 focYOff = 125.f;
 
+    
     // Focus on mario
     vec3f_copy(focus, sMarioCamState->pos);
     c->focus[1] += focYOff;
@@ -1490,12 +1491,13 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     //! @bug unnecessary
     pitch = calculate_pitch(focus, pos);
     vec3f_get_dist_and_angle(focus, pos, &dist, &pitch, &yaw);
+    /// marker
     if (dist > maxDist) {
-        dist = maxDist;
+        camera_approach_f32_symmetric_bool(&dist, maxDist, 128);
     }
 
-    camera_approach_s16_symmetric_bool(&yaw, marioYaw, yawSpeed);
-    camera_approach_s16_symmetric_bool(&pitch, goalPitch, pitchInc);
+    camera_approach_s16_symmetric_bool(&yaw, marioYaw, 192);
+    camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
     if (dist < 300.f) {
         dist = 300.f;
     }
@@ -1532,7 +1534,7 @@ s32 mode_behind_mario(struct Camera *c) {
             newPos[1] = floorHeight;
         }
     }
-    approach_camera_height(c, newPos[1], 30.f);
+    approach_camera_height(c, newPos[1], 32.f);
     waterHeight = find_water_level(c->pos[0], c->pos[2]) + 100.f;
     if (c->pos[1] <= waterHeight) {
         gCameraMovementFlags |= CAM_MOVE_SUBMERGED;
