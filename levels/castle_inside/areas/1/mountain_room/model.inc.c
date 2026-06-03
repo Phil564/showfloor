@@ -344,7 +344,7 @@ static const Gfx castle_inside_mountain_dl_mesh_tri_1[] = {
 	gsSPEndDisplayList(),
 };
 
-static const Vtx castle_inside_mountain_dl_mesh_vtx_2[78] = {
+static const Vtx castle_inside_mountain_dl_mesh_vtx_2[74] = {
 	{{ {-768, -26, -3855}, 0, {-1296, -215}, {0, 0, 129, 255} }},
 	{{ {-1126, 0, -3855}, 0, {2288, -471}, {0, 0, 129, 255} }},
 	{{ {-768, 0, -3855}, 0, {-1296, -471}, {0, 0, 129, 255} }},
@@ -419,10 +419,6 @@ static const Vtx castle_inside_mountain_dl_mesh_vtx_2[78] = {
 	{{ {-1126, 0, -3804}, 0, {2288, 1821}, {0, 127, 0, 255} }},
 	{{ {-1126, 0, -3113}, 0, {2288, 8733}, {0, 127, 0, 255} }},
 	{{ {-768, 0, -3113}, 0, {-1296, 8733}, {0, 127, 0, 255} }},
-	{{ {-870, 0, -3010}, 0, {9200, -10619}, {0, 127, 0, 250} }},
-	{{ {-1024, 0, -3113}, 0, {10736, -11643}, {0, 127, 0, 255} }},
-	{{ {-1024, 0, -3010}, 0, {10736, -10619}, {0, 127, 0, 250} }},
-	{{ {-870, 0, -3113}, 0, {9200, -11643}, {0, 127, 0, 255} }},
 };
 
 static const Gfx castle_inside_mountain_dl_mesh_tri_2[] = {
@@ -460,7 +456,7 @@ static const Gfx castle_inside_mountain_dl_mesh_tri_2[] = {
 	gsSP1Triangle(8, 11, 9, 0),
 	gsSP1Triangle(12, 13, 14, 0),
 	gsSP1Triangle(12, 15, 13, 0),
-	gsSPVertex(castle_inside_mountain_dl_mesh_vtx_2 + 62, 16, 0),
+	gsSPVertex(castle_inside_mountain_dl_mesh_vtx_2 + 62, 12, 0),
 	gsSP1Triangle(0, 1, 2, 0),
 	gsSP1Triangle(2, 3, 0, 0),
 	gsSP1Triangle(3, 4, 0, 0),
@@ -469,36 +465,6 @@ static const Gfx castle_inside_mountain_dl_mesh_tri_2[] = {
 	gsSP1Triangle(6, 8, 9, 0),
 	gsSP1Triangle(10, 6, 9, 0),
 	gsSP1Triangle(10, 11, 6, 0),
-	gsSP1Triangle(12, 13, 14, 0),
-	gsSP1Triangle(12, 15, 13, 0),
-	gsSPEndDisplayList(),
-};
-
-static const Vtx castle_inside_mountain_dl_mesh_vtx_3[14] = {
-	{{ {-1024, 256, -3113}, 0, {773, 1026}, {0, 129, 0, 255} }},
-	{{ {-870, 256, -3010}, 0, {-4, 1026}, {0, 129, 0, 255} }},
-	{{ {-1024, 256, -3010}, 0, {773, 1026}, {0, 129, 0, 255} }},
-	{{ {-1024, 256, -3113}, 0, {773, 1026}, {0, 129, 0, 255} }},
-	{{ {-870, 256, -3113}, 0, {-4, 1026}, {0, 129, 0, 255} }},
-	{{ {-870, 256, -3010}, 0, {-4, 1026}, {0, 129, 0, 255} }},
-	{{ {-870, 256, -3113}, 0, {-4, 1026}, {129, 0, 0, 255} }},
-	{{ {-870, 0, -3010}, 0, {-4, 2010}, {129, 0, 0, 255} }},
-	{{ {-870, 256, -3010}, 0, {-4, 1026}, {129, 0, 0, 255} }},
-	{{ {-870, 0, -3113}, 0, {-4, 2010}, {129, 0, 0, 255} }},
-	{{ {-1024, 0, -3113}, 0, {773, 2010}, {127, 0, 0, 255} }},
-	{{ {-1024, 256, -3010}, 0, {773, 1026}, {127, 0, 0, 255} }},
-	{{ {-1024, 0, -3010}, 0, {773, 2010}, {127, 0, 0, 255} }},
-	{{ {-1024, 256, -3113}, 0, {773, 1026}, {127, 0, 0, 255} }},
-};
-
-static const Gfx castle_inside_mountain_dl_mesh_tri_3[] = {
-	gsSPVertex(castle_inside_mountain_dl_mesh_vtx_3 + 0, 14, 0),
-	gsSP1Triangle(0, 1, 2, 0),
-	gsSP1Triangle(3, 4, 5, 0),
-	gsSP1Triangle(6, 7, 8, 0),
-	gsSP1Triangle(6, 9, 7, 0),
-	gsSP1Triangle(10, 11, 12, 0),
-	gsSP1Triangle(10, 13, 11, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -509,8 +475,6 @@ const Gfx castle_inside_mountain_dl_mesh[] = {
 	gsSPDisplayList(castle_inside_mountain_dl_mesh_tri_1),
 	gsSPDisplayList(mat_castle_inside_CarpetMaterial),
 	gsSPDisplayList(castle_inside_mountain_dl_mesh_tri_2),
-	gsSPDisplayList(mat_castle_inside_WallBottomMaterial),
-	gsSPDisplayList(castle_inside_mountain_dl_mesh_tri_3),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
