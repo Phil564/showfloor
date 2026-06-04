@@ -55,6 +55,11 @@
             "release_rate": 208,
             "envelope": "envelope0",
             "sound": "07_step_sand"
+        },
+        "inst8": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "08_land_default"
         }
     },
     "instrument_list": [
@@ -66,6 +71,7 @@
         "inst4",
         "inst5",
         "inst6",
-        "inst7"
+        "inst7",
+        "inst8"
     ]
 }

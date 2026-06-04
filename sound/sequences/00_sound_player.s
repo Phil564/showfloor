@@ -437,12 +437,12 @@ layer_end
 
 .sound_action_landing_default:
 chan_setbank 1
-chan_setinstr 0
+chan_setinstr 9
 chan_setlayer 0, .layer_2AE
 chan_end
 
 .layer_2AE:
-layer_note1 46, 0x18, 255
+layer_note1 39, 0x18, 77
 layer_end
 
 .sound_action_landing_grass:
