@@ -94,7 +94,7 @@ For more questions, join our [Discord server](https://discord.gg/ynabeAS4eD).
 - `K-Dubs΄
 
 #### Miscellaneous Help
-- packrcrackr
+- pxan_valleys
 - Xiartic
 - Woohale54
 - RM05
