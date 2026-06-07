@@ -442,7 +442,7 @@ chan_setlayer 0, .layer_2AE
 chan_end
 
 .layer_2AE:
-layer_note1 39, 0x18, 88
+layer_note1 39, 0x18, 100
 layer_end
 
 .sound_action_landing_grass:
