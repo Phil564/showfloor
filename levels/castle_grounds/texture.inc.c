@@ -46,11 +46,6 @@ ALIGNED8 static const u8 castle_grounds_seg7_texture_07009000[] = {
 #include "levels/castle_grounds/8.rgba16.inc.c"
 };
 
-// 0x0700A800 - 0x0700B800
-ALIGNED8 static const u8 castle_grounds_seg7_texture_0700A800[] = {
-#include "levels/castle_grounds/9.rgba16.inc.c"
-};
-
 ALIGNED8 static const u8 castle_grounds_seg7_texture_areamap_top[] = {
 #include "levels/castle_grounds/areamap_castle_grounds_top.rgba16.inc.c"
 };

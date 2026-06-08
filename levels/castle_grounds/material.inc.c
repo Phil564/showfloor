@@ -361,28 +361,6 @@ static const Gfx mat_castle_grounds_ClockTopMaterial[] = {
 	gsSPEndDisplayList(),
 };
 
-static const Gfx mat_castle_grounds_FlagPoleMaterial[] = {
-	gsDPPipeSync(),
-    gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
-	gsSPClearGeometryMode(G_CULL_BACK),
-	gsSPTexture(65535, 65535, 0, 0, 1),
-	gsDPTileSync(),
-	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, castle_grounds_seg7_texture_0700A800),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadSync(),
-	gsDPLoadBlock(7, 0, 0, 511, 512),
-	gsDPPipeSync(),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 4, 0),
-	gsDPSetTileSize(0, 0, 0, 60, 124),
-	gsSPEndDisplayList(),
-};
-
-static const Gfx mat_revert_castle_grounds_FlagPoleMaterial[] = {
-	gsDPPipeSync(),
-	gsSPSetGeometryMode(G_CULL_BACK),
-	gsSPEndDisplayList(),
-};
-
 static const Gfx mat_castle_grounds_FenceMaterial[] = {
 	gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
