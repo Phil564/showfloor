@@ -72,7 +72,7 @@ const LevelScript level_ddd_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_DDD_BOWSER_SUB,      water_land_submarine_geo),
 
     AREA(/*index*/ 1, water_land_area_1_geo),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -2400, 3000, 125, /*angle*/ 0, 7, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3320, 3000, -320, /*angle*/ 0, 7, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_DDD,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_SUCCESS, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 1, /*destNode*/ WARP_NODE_35, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_DEATH,   /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 1, /*destNode*/ WARP_NODE_67, /*flags*/ WARP_NO_CHECKPOINT),
@@ -99,7 +99,7 @@ const LevelScript level_ddd_entry[] = {
     END_AREA(),
 
     FREE_LEVEL_POOL(),
-    MARIO_POS(/*area*/ 1, /*yaw*/ 180, /*pos*/ -3071, 3000, 500),
+    MARIO_POS(/*area*/ 1, /*yaw*/ 180, /*pos*/ -3320, 3000, -320),
     CALL(/*arg*/ 0, /*func*/ lvl_init_or_update),
     CALL_LOOP(/*arg*/ 1, /*func*/ lvl_init_or_update),
     CLEAR_LEVEL(),
