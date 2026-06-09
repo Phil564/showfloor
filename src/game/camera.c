@@ -819,8 +819,8 @@ void radial_camera_move(struct Camera *c) {
     }
 
     if (gCameraMovementFlags & CAM_MOVE_ENTERED_ROTATE_SURFACE) {
-        rotateSpeed = 0x6F;
-        maxAreaYaw = DEGREES(25); // causes the camera to stop sooner when entering snow slider
+        rotateSpeed = 0x80;
+        maxAreaYaw = DEGREES(30); // causes the camera to stop sooner when entering snow slider
     }
 
     // Avoid obstructing walls
