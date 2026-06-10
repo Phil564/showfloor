@@ -312,7 +312,6 @@ struct MarioState {
     /*0xC4*/ f32 gettingBlownGravity;
              u8 pretipTimer;
              u8 sleepTimer;
-             u8 isPushing;
 };
 
 #endif // TYPES_H

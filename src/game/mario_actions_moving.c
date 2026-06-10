@@ -1412,32 +1412,14 @@ s32 act_death_exit_land(struct MarioState *m) {
 
 u32 common_landing_action(struct MarioState *m, s16 animation, u32 airAction) {
     u32 stepResult;
-    s16 wallAngle;
-    s16 dWallAngle;
-
-    m->isPushing = 0;
-
-    if (m->wall != NULL) {
-        wallAngle = atan2s(m->wall->normal.z, m->wall->normal.x);
-        dWallAngle = wallAngle - m->faceAngle[1];
-    }
 
     if (m->input & INPUT_NONZERO_ANALOG) {
         apply_landing_accel(m, 0.98f);
-        if (m->forwardVel < 0) {
-            m->forwardVel = 0;
-        }
     } else if (m->forwardVel >= 16.0f) {
         apply_slope_decel(m, 2.0f);
     } else {
         m->vel[1] = 0.0f;
     }
-
-    if (m->forwardVel > 16.0f) {
-        m->particleFlags |= PARTICLE_DUST;
-    }
-
-    play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_LANDING);
 
     stepResult = perform_ground_step(m);
     switch (stepResult) {
@@ -1446,28 +1428,24 @@ u32 common_landing_action(struct MarioState *m, s16 animation, u32 airAction) {
             break;
 
         case GROUND_STEP_HIT_WALL:
-            set_mario_animation(m, MARIO_ANIM_PUSHING);
-            if (m->wall == NULL || dWallAngle <= -27128 || dWallAngle >= 27128) {
-                m->isPushing = 1;
-                update_walking_speed(m);
-                if (m->forwardVel > 6.0f) {
-                    mario_set_forward_vel(m, 6.0f);
-                }
+            if (m->actionTimer == 1) {
+                set_mario_animation(m, MARIO_ANIM_PUSHING);    
+            } else if (m->intendedMag != 0) {
+                set_mario_animation(m, MARIO_ANIM_PUSHING);                   
             } else {
-                m->isPushing = 2;
-                if (is_anim_past_frame(m, 1)) {
-                    set_mario_animation(m, animation);
-                    if (m->intendedMag != 0) {
-                        m->isPushing = 3;
-                    }
-                }
+                set_mario_animation(m, animation);                
             }
             break;
-
         default:
             set_mario_animation(m, animation);
             break;
     }
+
+    if (m->forwardVel > 16.0f) {
+        m->particleFlags |= PARTICLE_DUST;
+    }
+
+    play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_LANDING);
 
     return stepResult;
 }
@@ -1488,12 +1466,6 @@ s32 common_landing_cancels(struct MarioState *m, struct LandingAction *landingAc
     }
 
     if (++m->actionTimer >= landingAction->numFrames) {
-        if (!(m->intendedMag != 0 && m->isPushing == 1)) {
-            return set_mario_action(m, landingAction->endAction, 0);
-        }
-    }
-    if ((m->intendedMag == 0 && m->isPushing == 2) || m->isPushing == 3) {
-        m->isPushing = 0;
         return set_mario_action(m, landingAction->endAction, 0);
     }
 
@@ -1509,11 +1481,6 @@ s32 common_landing_cancels(struct MarioState *m, struct LandingAction *landingAc
 }
 
 s32 act_jump_land(struct MarioState *m) {
-    if (m->isPushing == 1 && m->actionTimer > 2 && (m->input & INPUT_A_PRESSED)) {
-        set_mario_action(m, ACT_JUMP, 0);
-        return TRUE;
-    }
-
     if (common_landing_cancels(m, &sJumpLandAction, set_jumping_action)) {
         return TRUE;
     }

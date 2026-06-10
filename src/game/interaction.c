@@ -758,7 +758,7 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
     u32 doorAction = 0;
     u32 actionArg;
 
-    if (m->action == ACT_WALKING || m->isPushing == 1) {
+    if (m->action == ACT_WALKING) {
         actionArg = should_push_or_pull_door(m, o) + 0x00000004;
 
         if (doorAction == 0) {
@@ -821,7 +821,7 @@ u32 interact_door(struct MarioState *m, UNUSED u32 interactType, struct Object *
     s16 requiredNumStars = o->oBhvParams >> 24;
     s16 numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
 
-    if (m->action == ACT_WALKING || m->isPushing == 1) {
+    if (m->action == ACT_WALKING ) {
         if (numStars >= requiredNumStars) {
             u32 actionArg = should_push_or_pull_door(m, o);
             u32 enterDoorAction;
