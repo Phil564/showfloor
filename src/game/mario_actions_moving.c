@@ -1415,6 +1415,9 @@ u32 common_landing_action(struct MarioState *m, s16 animation, u32 airAction) {
 
     if (m->input & INPUT_NONZERO_ANALOG) {
         apply_landing_accel(m, 0.98f);
+        if (m->forwardVel < 0) {
+            m->forwardVel = 0;
+        }
     } else if (m->forwardVel >= 16.0f) {
         apply_slope_decel(m, 2.0f);
     } else {
