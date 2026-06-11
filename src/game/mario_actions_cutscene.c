@@ -618,8 +618,10 @@ s32 act_emerge_from_pipe(struct MarioState *m) {
 }
 
 s32 act_spawn_spin_airborne(struct MarioState *m) {
+    gCameraMovementFlags |= CAM_FLAG_SPAWN; 
     // entered water, exit action
     if (m->pos[1] < m->waterLevel - 100) {
+        gCameraMovementFlags &= ~CAM_FLAG_SPAWN; 
         load_level_init_text(0);
         return set_water_plunge_action(m);
     }
@@ -634,6 +636,7 @@ s32 act_spawn_spin_airborne(struct MarioState *m) {
             if (m->actionState++ == 0) {
                 m->vel[1] = 36.0f;
             } else {
+                gCameraMovementFlags &= ~CAM_FLAG_SPAWN; 
                 set_mario_action(m, ACT_SPAWN_SPIN_LANDING, 0);
             }
             break;
@@ -660,6 +663,7 @@ s32 act_spawn_spin_landing(struct MarioState *m) {
     set_mario_animation(m, MARIO_ANIM_GENERAL_LAND);
     if (is_anim_at_end(m)) {
         load_level_init_text(0);
+
         set_mario_action(m, ACT_IDLE, 0);
     }
     return FALSE;

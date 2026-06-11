@@ -138,7 +138,7 @@
 #define CAM_FLAG_CCM_SLIDE_SHORTCUT      0x0010
 #define CAM_FLAG_CAM_NEAR_WALL           0x0020
 #define CAM_FLAG_SLEEPING                0x0040
-#define CAM_FLAG_UNUSED_7                0x0080
+#define CAM_FLAG_SPAWN                   0x0080
 #define CAM_FLAG_UNUSED_8                0x0100
 #define CAM_FLAG_COLLIDED_WITH_WALL      0x0200
 #define CAM_FLAG_START_TRANSITION        0x0400
