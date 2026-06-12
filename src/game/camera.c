@@ -6264,9 +6264,9 @@ BAD_RETURN(s32) cutscene_door_move_behind_mario(struct Camera *c) {
     vec3f_set(camOffset, 0.f, 125.f, 250.f);
 
     if (doorRotation == 0) { // pulling door
-        camOffset[0] = 120.f;
+        camOffset[0] = 125.f;
         camOffset[1] = 40.f;
-        camOffset[2] = 195.f; // used to be 280.f
+        camOffset[2] = 240.f; // used to be 280.f
     } else {                  // pushing door
         camOffset[0] = -85.f;
         camOffset[1] = 30.f;
@@ -6281,11 +6281,11 @@ BAD_RETURN(s32) cutscene_door_follow_mario(struct Camera *c) {
     s16 pitch, yaw;
     f32 dist;
 
-    set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0);
+    set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0.f);
     vec3f_get_dist_and_angle(c->focus, c->pos, &dist, &pitch, &yaw);
 
-    camera_approach_f32_symmetric_bool(&dist, 225.f, 10);
-    camera_approach_s16_symmetric_bool(&pitch, 0, 96);
+    camera_approach_f32_symmetric_bool(&dist, 215.f, 14.f);
+    camera_approach_s16_symmetric_bool(&pitch, 0, 128.f);
     // camera_approach_s16_symmetric_bool(&yaw, 0, 16);
 
     vec3f_set_dist_and_angle(c->focus, c->pos, dist, pitch, yaw);
