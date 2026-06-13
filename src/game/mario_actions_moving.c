@@ -640,21 +640,14 @@ void push_or_sidle_wall(struct MarioState *m, Vec3f startPos) {
     f32 dz = m->pos[2] - startPos[2];
     f32 movedDistance = sqrtf(dx * dx + dz * dz);
     //! (Speed Crash) If a wall is after moving 16384 distance, this crashes.
-    s32 val04 = (s32) (movedDistance * 2.0f * 0x10000);
+    s32 val04 = (s32)(movedDistance * 2.0f * 0x10000);
 
     if (m->wall != NULL) {
         wallAngle = atan2s(m->wall->normal.z, m->wall->normal.x);
         dWallAngle = wallAngle - m->faceAngle[1];
     }
 
-    if ((dWallAngle <= -29128 && dWallAngle >= -31000)
-        || (dWallAngle >= 29128 && dWallAngle <= 31000)) {
-        if (m->forwardVel > 6.0f) {
-            mario_set_forward_vel(m, 6.0f);
-        }
-    }
-
-    if (m->wall == NULL || dWallAngle <= -29128 || dWallAngle >= 29128) {
+    if (m->wall == NULL || dWallAngle <= -0x71C8 || dWallAngle >= 0x71C8) {
         m->flags |= MARIO_UNKNOWN_31;
         set_mario_animation(m, MARIO_ANIM_PUSHING);
         play_step_sound(m, 6, 18);
@@ -665,12 +658,8 @@ void push_or_sidle_wall(struct MarioState *m, Vec3f startPos) {
             set_mario_anim_with_accel(m, MARIO_ANIM_SIDESTEP_LEFT, val04);
         }
 
-        if (m->forwardVel < 4.0f) {
+        if (m->forwardVel < 16.0f) {
             m->particleFlags |= PARTICLE_DUST;
-        }
-
-        if (m->forwardVel > 6.0f) {
-            mario_set_forward_vel(m, 6.0f);
         }
 
         m->actionState = 1;
@@ -713,13 +702,10 @@ s32 act_walking(struct MarioState *m) {
         return set_mario_action(m, ACT_CROUCH_SLIDE, 0);
     }
 
+    m->actionState = 0;
+
     vec3f_copy(startPos, m->pos);
     update_walking_speed(m);
-
-    if (m->actionState != 0 && (m->forwardVel < m->intendedMag))
-        m->forwardVel = m->intendedMag;
-
-    m->actionState = 0;
 
     switch (perform_ground_step(m)) {
         case GROUND_STEP_LEFT_GROUND:

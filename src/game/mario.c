@@ -779,9 +779,6 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
         case ACT_HOLD_JUMP:
             m->marioObj->header.gfx.animInfo.animID = -1;
             set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
-            if (m->actionState != 0 && m->wall != NULL) {
-                m->forwardVel = m->intendedMag;
-            }
             m->forwardVel *= 0.8f;
             break;
 
