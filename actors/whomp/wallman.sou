@@ -528,7 +528,7 @@ static Gfx RCP_wallman_Rhand[] = {
 Hierarchy RCP_HmsEnemywallman[] = {
  hmsHeader(1000)
  hmsBegin()
- hmsScale(0.25f)
+ hmsScale(0.24f)
     hmsBegin()
       hmsJoint(RM_SURF,NULL,5,181,0)  /* chn18(11) */
       hmsBegin()
