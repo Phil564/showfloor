@@ -418,9 +418,7 @@ static const Gfx mat_mountain_TowerWindowMaterial[] = {
 
 static const Gfx mat_extending_platform_ArrowMaterial[] = {
 	gsDPPipeSync(),
-    gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
-	gsSPClearGeometryMode(G_LIGHTING),
-	gsSPClearGeometryMode(G_CULL_BACK),
+    gsDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPTileSync(),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, wf_seg7_texture_07006000),
@@ -430,7 +428,7 @@ static const Gfx mat_extending_platform_ArrowMaterial[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetGeometryMode(G_LIGHTING),
+	gsSPSetLights1(mountain_lights),
 	gsSPEndDisplayList(),
 };
 
