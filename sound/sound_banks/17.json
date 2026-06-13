@@ -92,8 +92,10 @@
         },
         "inst4": {
             "release_rate": 10,
+            "normal_range_hi": 38,
             "envelope": "envelope4",
-            "sound": "26_tine_piano"
+            "sound": "26_tine_piano_C4",
+            "sound_hi": "4D_tine_piano_C5"
         },
         "percussion": [
             {"release_rate": 10, "pan": 62, "envelope": "envelope5", "sound": {"sample": "06_kick_drum_1", "tuning": 0.735784}},

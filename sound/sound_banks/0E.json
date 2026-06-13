@@ -87,13 +87,17 @@
         },
         "inst5": {
             "release_rate": 10,
+            "normal_range_hi": 38,
             "envelope": "envelope5",
-            "sound": "26_tine_piano"
+            "sound": "26_tine_piano_C4",
+            "sound_hi": "4D_tine_piano_C5"
         },
         "inst6": {
             "release_rate": 10,
+            "normal_range_hi": 38,
             "envelope": "envelope6",
-            "sound": "26_tine_piano"
+            "sound": "26_tine_piano_C4",
+            "sound_hi": "4D_tine_piano_C5"
         }
     },
     "instrument_list": [

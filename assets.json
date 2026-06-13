@@ -3226,7 +3226,7 @@
 "sound/samples/instruments/23_strings_Eb2.aiff": [0,{"jp":["@sound",155],"us":["@sound",176],"eu":["@sound",176],"sh":["@sound",176],"cn":["@sound",176]}],
 "sound/samples/instruments/24_strings_G#2.aiff": [0,{"jp":["@sound",156],"us":["@sound",177],"eu":["@sound",177],"sh":["@sound",177],"cn":["@sound",177]}],
 "sound/samples/instruments/25_strings_F#3.aiff": [0,{"jp":["@sound",157],"us":["@sound",178],"eu":["@sound",178],"sh":["@sound",178],"cn":["@sound",178]}],
-"sound/samples/instruments/26_tine_piano.aiff": [0,{"jp":["@sound",158],"us":["@sound",179],"eu":["@sound",179],"sh":["@sound",179],"cn":["@sound",179]}],
+"sound/samples/instruments/26_tine_piano_C4.aiff": [0,{"jp":["@sound",158],"us":["@sound",179],"eu":["@sound",179],"sh":["@sound",179],"cn":["@sound",179]}],
 "sound/samples/instruments/27_harpsichord_F3.aiff": [0,{"jp":["@sound",159],"us":["@sound",180],"eu":["@sound",180],"sh":["@sound",180],"cn":["@sound",180]}],
 "sound/samples/instruments/28_sitar_1_A2.aiff": [0,{"jp":["@sound",160],"us":["@sound",181],"eu":["@sound",181],"sh":["@sound",181],"cn":["@sound",181]}],
 "sound/samples/instruments/29_orchestra_hit_C3.aiff": [0,{"jp":["@sound",161],"us":["@sound",182],"eu":["@sound",182],"sh":["@sound",182],"cn":["@sound",182]}],
