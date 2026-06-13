@@ -654,7 +654,7 @@ static UNUSED void set_pos_to_mario(Vec3f foc, Vec3f pos, f32 yOff, f32 focYOff,
 }
 
 /**
- * Set the camera's y coordinate to goalHeight, respecting floors and ceilings in the way
+ * Set the camera's y coordinate to goalHeight, respecting flset_camera_heightoors and ceilings in the way
  */
 void set_camera_height(struct Camera *c, f32 goalHeight) {
     struct Surface *surface;
@@ -692,7 +692,7 @@ void set_camera_height(struct Camera *c, f32 goalHeight) {
             goalHeight = camFloorHeight;
             c->pos[1] = goalHeight;
         }
-        approach_camera_height(c, goalHeight, 30.f);
+        approach_camera_height(c, goalHeight, 32.f);
         if (camCeilHeight != CELL_HEIGHT_LIMIT) {
             camCeilHeight -= baseOff;
             if ((c->pos[1] > camCeilHeight && sMarioGeometry.currFloorHeight + baseOff < camCeilHeight)
@@ -740,10 +740,18 @@ s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     f32 yOff = 125.f;
     f32 baseDist = 1000.f;
 
-    sAreaYaw = camYaw - sModeOffsetYaw;
-    calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
-    focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    if ((gCurrLevelNum == LEVEL_DDD) && (gCameraMovementFlags & CAM_FLAG_SPAWN)) {
+        yOff = 0x140;
+        sAreaYaw = camYaw - sModeOffsetYaw;
+        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
+        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    } else {
+        sAreaYaw = camYaw - sModeOffsetYaw;
+        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
+        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    }
 
+   
     return camYaw;
 }
 
@@ -896,6 +904,8 @@ void radial_camera_move(struct Camera *c) {
                         rotateSpeed = 0x3A;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
+                    } else if (gCurrLevelNum == LEVEL_DDD) {
+                        rotateSpeed = 100.f;
                     }
                 }
                 
@@ -1499,11 +1509,14 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
 
     if (c->mode == CAMERA_MODE_WATER_SURFACE) {
         if (c->pos[1] > gMarioStates->waterLevel + 120) {
-            dist -= 32.0f * (dist / 1000);
+            dist -= 40.f;
+            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 96);
         } else {
             if (dist > 1000) dist = 1000; 
+            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
         } 
-        camera_approach_s16_symmetric_bool(&pitch, goalPitch, 128);
+        
+        
     } else { 
         if (dist > 1000) dist = 1000;
         camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
