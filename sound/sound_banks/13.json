@@ -18,14 +18,14 @@
     "instruments": {
         "inst0": {
             "release_rate": 10,
-            "normal_range_hi": 38,
+            "normal_range_hi": 50,
             "envelope": "envelope0",
             "sound": "26_tine_piano_C4",
             "sound_hi": "4D_tine_piano_C5"
         },
         "inst1": {
             "release_rate": 10,
-            "normal_range_hi": 38,
+            "normal_range_hi": 50,
             "envelope": "envelope0",
             "sound": "26_tine_piano_C4",
             "sound_hi": "4D_tine_piano_C5"
