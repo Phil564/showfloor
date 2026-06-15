@@ -6055,8 +6055,14 @@ BAD_RETURN(s32) cutscene_enter_painting(struct Camera *c) {
  * cvar2 is the camera's focus relative to Mario
  */
 BAD_RETURN(s32) cutscene_exit_painting_start(struct Camera *c) {
-    vec3f_set(sCutsceneVars[2].point, -200.f, 10.f, 1168.f);
-    vec3f_set(sCutsceneVars[1].point, -58.f, 0.f, 444.f);
+    if (gMarioStates->faceAngle[1] == (s16)0x8000) {
+        vec3f_set(sCutsceneVars[2].point, -200.f, 10.f, 1168.f);
+        vec3f_set(sCutsceneVars[1].point, -58.f, 0.f, 444.f);
+    } else {
+        vec3f_set(sCutsceneVars[2].point, -180.f, -120.f, 1100.f);
+        vec3f_set(sCutsceneVars[1].point, -58.f, -50.f, 444.f);
+    }
+
     vec3f_copy(sCutsceneVars[0].point, sMarioCamState->pos);
 
     sCutsceneVars[0].angle[0] = 0;

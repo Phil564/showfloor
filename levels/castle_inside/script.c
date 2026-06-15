@@ -65,18 +65,18 @@ static const LevelScript script_func_local_1[] = {
     WARP_NODE(/*id*/ 0x26, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x26, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x27, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x27, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x28, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x28, /*flags*/ WARP_NO_CHECKPOINT),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2319, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00320000, /*bhv*/ bhvPaintingStarCollectWarp), //ddd
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2310, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00320000, /*bhv*/ bhvPaintingStarCollectWarp), //ddd
     OBJECT(/*model*/ MODEL_NONE, /*pos*/ -950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00330000, /*bhv*/ bhvPaintingStarCollectWarp), //wf
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00340000, /*bhv*/ bhvPaintingStarCollectWarp), //lll
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2319, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00350000, /*bhv*/ bhvPaintingStarCollectWarp), //ccm
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2310, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00350000, /*bhv*/ bhvPaintingStarCollectWarp), //ccm
     WARP_NODE(/*id*/ 0x32, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x33, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x33, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x34, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x34, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x35, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x35, /*flags*/ WARP_NO_CHECKPOINT),
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2319, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00640000, /*bhv*/ bhvPaintingDeathWarp), //ddd
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2310, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00640000, /*bhv*/ bhvPaintingDeathWarp), //ddd
     OBJECT(/*model*/ MODEL_NONE, /*pos*/ -950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00650000, /*bhv*/ bhvPaintingDeathWarp), //wf
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00660000, /*bhv*/ bhvPaintingDeathWarp), //lll
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2319, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00670000, /*bhv*/ bhvPaintingDeathWarp), //ccm
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2310, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00670000, /*bhv*/ bhvPaintingDeathWarp), //ccm
     WARP_NODE(/*id*/ 0x64, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x65, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x65, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x66, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x66, /*flags*/ WARP_NO_CHECKPOINT),
@@ -102,10 +102,10 @@ const LevelScript level_castle_inside_entry[] = {
 
     AREA(/*index*/ 1, castle_geo),
         OBJECT(/*model*/ MODEL_NONE,              /*pos*/    0, 614, -6261, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00140000, /*bhv*/ bhvCastleFloorTrap),
-        OBJECT(/*model*/ MODEL_CASTLE_DOOR_A,     /*pos*/-1690, 205, -2319, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR_A,     /*pos*/-1690, 205, -2320, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR_B,     /*pos*/ -947,   0, -3061, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR_C,     /*pos*/  947,   0, -3061, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_CASTLE_DOOR_D,     /*pos*/ 1690, 205, -2319, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR_D,     /*pos*/ 1690, 205, -2320, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ -329,   0, -2853, /*angle*/ 0, -45, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/  329,   0, -2853, /*angle*/ 0,  45, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/  -77, 410, -3061, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00010000, /*bhv*/ bhvDoor),
