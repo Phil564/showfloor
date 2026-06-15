@@ -66,16 +66,16 @@ static const LevelScript script_func_local_1[] = {
     WARP_NODE(/*id*/ 0x27, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x27, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x28, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x28, /*flags*/ WARP_NO_CHECKPOINT),
     OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2319, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00320000, /*bhv*/ bhvPaintingStarCollectWarp), //ddd
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -947, 99, -4907, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00330000, /*bhv*/ bhvPaintingStarCollectWarp), //wf
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/  947, 99, -4907, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00340000, /*bhv*/ bhvPaintingStarCollectWarp), //lll
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00330000, /*bhv*/ bhvPaintingStarCollectWarp), //wf
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00340000, /*bhv*/ bhvPaintingStarCollectWarp), //lll
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2319, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00350000, /*bhv*/ bhvPaintingStarCollectWarp), //ccm
     WARP_NODE(/*id*/ 0x32, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x32, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x33, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x33, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x34, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x34, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x35, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x35, /*flags*/ WARP_NO_CHECKPOINT),
     OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3279, 717, -2319, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x00640000, /*bhv*/ bhvPaintingDeathWarp), //ddd
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/  -947, 99, -4907, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00650000, /*bhv*/ bhvPaintingDeathWarp), //wf
-    OBJECT(/*model*/ MODEL_NONE, /*pos*/   947, 99, -4907, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00660000, /*bhv*/ bhvPaintingDeathWarp), //lll
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/ -950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00650000, /*bhv*/ bhvPaintingDeathWarp), //wf
+    OBJECT(/*model*/ MODEL_NONE, /*pos*/  950, 107, -4942, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00660000, /*bhv*/ bhvPaintingDeathWarp), //lll
     OBJECT(/*model*/ MODEL_NONE, /*pos*/  3279, 717, -2319, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00670000, /*bhv*/ bhvPaintingDeathWarp), //ccm
     WARP_NODE(/*id*/ 0x64, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x64, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x65, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 0x01, /*destNode*/ 0x65, /*flags*/ WARP_NO_CHECKPOINT),

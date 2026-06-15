@@ -909,7 +909,7 @@ void radial_camera_move(struct Camera *c) {
                     }
                 }
                 
-                // turning logic, i
+                // turning logic
                 if (gMarioStates->forwardVel != 0) {
                     if (turnYaw < 0) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
@@ -6055,8 +6055,8 @@ BAD_RETURN(s32) cutscene_enter_painting(struct Camera *c) {
  * cvar2 is the camera's focus relative to Mario
  */
 BAD_RETURN(s32) cutscene_exit_painting_start(struct Camera *c) {
-    vec3f_set(sCutsceneVars[2].point, -178.f, 40.f, 1050.f);
-    vec3f_set(sCutsceneVars[1].point, -58.f, 30.f, 444.f);
+    vec3f_set(sCutsceneVars[2].point, -200.f, 10.f, 1168.f);
+    vec3f_set(sCutsceneVars[1].point, -58.f, 0.f, 444.f);
     vec3f_copy(sCutsceneVars[0].point, sMarioCamState->pos);
 
     sCutsceneVars[0].angle[0] = 0;
@@ -6122,7 +6122,6 @@ BAD_RETURN(s32) cutscene_exit_painting(struct Camera *c) {
     sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
     cutscene_event(cutscene_exit_painting_start, c, 0, 0);
     cutscene_event(cutscene_unused_exit_focus_mario, c, 24, 24);
-    cutscene_event(cutscene_unused_exit_focus_mario, c, 26, 26);
     cutscene_event(cutscene_unused_exit_focus_mario, c, 28, -1);
 
     update_camera_yaw(c);
