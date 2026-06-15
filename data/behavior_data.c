@@ -1390,6 +1390,7 @@ const BehaviorScript bhvLLLSinkingRectangularPlatform[] = {
     OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(lll_seg7_collision_slow_tilting_platform),
     SET_FLOAT(oCollisionDistance, 2000),
+    SET_FLOAT(oDrawingDistance, 4000),
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_lll_sinking_rectangular_platform_loop),
