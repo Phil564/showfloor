@@ -6345,7 +6345,7 @@ BAD_RETURN(s32) cutscene_door_mode(struct Camera *c) {
 
     // Loop until Mario is no longer using the door
     if (sMarioCamState->action != ACT_ENTERING_STAR_DOOR && sMarioCamState->action != ACT_PULLING_DOOR
-        && sMarioCamState->action != ACT_PUSHING_DOOR) {
+        && sMarioCamState->action != ACT_PUSHING_DOOR) {   
         gCutsceneTimer = CUTSCENE_STOP;
         c->cutscene = 0;
     }
@@ -6387,7 +6387,7 @@ struct Cutscene sCutsceneDoorPush[] = {
  * side.
  */
 struct Cutscene sCutsceneDoorPullMode[] = { { cutscene_door_start, 1 },
-                                            { cutscene_door_fix_cam, 30 },
+                                            { cutscene_door_fix_cam, 20 },
                                             { cutscene_door_mode, CUTSCENE_LOOP } };
 
 /**
@@ -6757,7 +6757,7 @@ void approach_fov_45(struct MarioState *m) {
     f32 targetFoV = sFOVState.fov;
 
     if (m->area->camera->mode == CAMERA_MODE_FIXED && m->area->camera->cutscene == 0) {
-        targetFoV = 63.f;
+        targetFoV = 64.f;
     } else {
         targetFoV = 45.f;
     }
