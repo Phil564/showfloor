@@ -905,7 +905,7 @@ void radial_camera_move(struct Camera *c) {
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
                     } else if (gCurrLevelNum == LEVEL_DDD) {
-                        rotateSpeed = 100.f;
+                        rotateSpeed = 0x60;
                     }
                 }
                 
@@ -6264,6 +6264,7 @@ BAD_RETURN(s32) cutscene_door_fix_cam(struct Camera *c) {
 BAD_RETURN(s32) cutscene_door_loop(struct Camera *c) {
     //! bitwise AND instead of boolean
     if ((sMarioCamState->action != ACT_PULLING_DOOR) & (sMarioCamState->action != ACT_PUSHING_DOOR)) {
+        
         gCutsceneTimer = CUTSCENE_STOP;
         c->cutscene = 0;
     }
@@ -6322,6 +6323,7 @@ BAD_RETURN(s32) cutscene_door_end(struct Camera *c) {
     gCutsceneTimer = CUTSCENE_STOP;
     sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
     sStatusFlags &= ~CAM_FLAG_BLOCK_SMOOTH_MOVEMENT;
+    gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT; 
     set_flag_post_door(c);
     update_camera_yaw(c);
 }
