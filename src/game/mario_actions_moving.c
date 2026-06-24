@@ -509,7 +509,7 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                 } else {
                     val14 = (m->intendedMag * 10000.0f) * 2.5f;
                     set_mario_anim_with_accel(m, MARIO_ANIM_START_TIPTOE, val14);
-                    play_step_sound(m, 7, 22);
+                    play_step_sound(m, 1, 16);
                     if (is_anim_past_frame(m, 25)) {
                         m->pretipTimer += 1;
                     }
@@ -556,8 +556,12 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     //! (Speed Crash) If Mario's speed is more than 2^17.
                     val14 = (s32) (val04 / 4.0f * 0x10000);
                     set_mario_anim_with_accel(m, MARIO_ANIM_RUNNING, val14);
-                    play_step_sound(m, 9, 45);
-                    targetPitch = tilt_body_running(m);
+
+                    // genuinely necessary for the walking sfx to play on frame 1
+                    play_step_sound(m, 0, 73); // ???
+                    play_step_sound(m, 36, 72);
+
+                    // targetPitch = tilt_body_running(m);
 
                     val0C = FALSE;
                 }
