@@ -561,7 +561,7 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     play_step_sound(m, 0, 73); // ???
                     play_step_sound(m, 36, 72);
 
-                    // targetPitch = tilt_body_running(m);
+                    targetPitch = tilt_body_running(m);
 
                     val0C = FALSE;
                 }
