@@ -380,7 +380,7 @@ chan_setlayer 0, .layer_252
 chan_end
 
 .layer_252:
-layer_note1 39, 0xb, 255
+layer_note1 39, 0xb, 220
 layer_end
 
 .sound_action_jump_stone:
@@ -463,7 +463,7 @@ chan_setlayer 0, .layer_2CC
 chan_end
 
 .layer_2CC:
-layer_note1 39, 0x24, 127
+layer_note1 39, 0x24, 112
 layer_end
 
 .sound_action_landing_stone:
@@ -1527,8 +1527,8 @@ layer_jump .layer_98C
 layer_end
 
 .sound_moving_slide_water:
-chan_setbank 2
-chan_setinstr 1
+chan_setbank 3
+chan_setinstr 6
 chan_setlayer 0, .layer_9A8
 chan_setlayer 1, .layer_9B3
 chan_setval 1
@@ -1541,13 +1541,12 @@ chan_end
 layer_delay 1
 layer_somethingon
 .layer_9AB:
-layer_note1 58, 0x12c, 105
+layer_note1 58, 0x12c, 70
 layer_jump .layer_9AB
 layer_end
 
 .layer_9B3:
-layer_portamento 0x81, 39, 255
-layer_note1 48, 0x32, 80
+layer_note1 48, 0x12c, 70
 layer_end
 
 .sound_moving_slide_stone:
