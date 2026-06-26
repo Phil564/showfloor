@@ -5318,7 +5318,7 @@ BAD_RETURN(s32) cutscene_dance_default_rotate(struct Camera *c) {
     if ((gCurrLevelNum == LEVEL_BOWSER_1)) { // for some reason only grabbing a star in bowser 1 causes the camera to smoothly move
         sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
         cutscene_event(cutscene_dance_default_focus_mario, c, 0, 20);
-    } else { // in any other level is just freezes when mario lands
+    } else { // in any other level it just freezes when mario lands
         focus_in_front_of_mario(c, -100.f, 0.0f);
     }
 }
