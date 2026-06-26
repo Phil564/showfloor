@@ -5314,15 +5314,12 @@ BAD_RETURN(s32) cutscene_dance_default_focus_mario(struct Camera *c) {
  * In the rotate dance: the camera moves closer and rotates clockwise around Mario.
  */
 BAD_RETURN(s32) cutscene_dance_default_rotate(struct Camera *c) {
-    sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
     sYawSpeed = 0;
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wparentheses-equality"
-    if ((gCurrLevelNum == LEVEL_BOWSER_1)) {
-#pragma GCC diagnostic pop
+    if ((gCurrLevelNum == LEVEL_BOWSER_1)) { // for some reason only grabbing a star in bowser 1 causes the camera to smoothly move
+        sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
         cutscene_event(cutscene_dance_default_focus_mario, c, 0, 20);
-    } else {
-        cutscene_event(cutscene_dance_default_focus_mario, c, 0, 0);
+    } else { // in any other level is just freezes when mario lands
+        focus_in_front_of_mario(c, -100.f, 0.0f);
     }
 }
 

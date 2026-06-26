@@ -15,16 +15,15 @@ void bhv_celebration_star_init(void) {
 void celeb_star_act_spin_around_mario(void) {
     o->oPosX = o->oHomeX + sins(o->oMoveAngleYaw) * (f32) (o->oCelebStarDiameterOfRotation / 2);
     o->oPosZ = o->oHomeZ + coss(o->oMoveAngleYaw) * (f32) (o->oCelebStarDiameterOfRotation / 2);
-    o->oPosY += 5.0f;
     o->oMoveAngleYaw += 0x2000;
+    o->oAnimState++;
 
-    if (o->oTimer & 1)
-        o->oAnimState++;
-    if (o->oTimer == 40)
+    if (o->oTimer == 47)
         o->oAction = CELEB_STAR_ACT_FACE_CAMERA;
-    if (o->oTimer < 35) {
+    if (o->oTimer < 40) {
         spawn_object(o, MODEL_SPARKLES, bhvCelebrationStarSparkle);
         o->oCelebStarDiameterOfRotation++;
+        o->oPosY += 5.0f;
     } else
         o->oCelebStarDiameterOfRotation -= 20;
 }
@@ -38,8 +37,8 @@ void celeb_star_act_face_camera(void) {
     if (o->oTimer <= 7)
         o->oAnimState++;
 
-    if (o->oTimer < 10)
-        cur_obj_scale((f32) o->oTimer / 10.0);
+    if (o->oTimer < 8)
+        cur_obj_scale((f32) o->oTimer / 8.0);
 }
 
 void bhv_celebration_star_loop(void) {
