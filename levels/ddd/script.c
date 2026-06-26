@@ -72,7 +72,7 @@ const LevelScript level_ddd_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_DDD_BOWSER_SUB,      water_land_submarine_geo),
 
     AREA(/*index*/ 1, water_land_area_1_geo),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3071, 3232, 0, /*angle*/ 0, 0, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ -3072, 3168, 0, /*angle*/ 0, 7, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_DDD,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_SUCCESS, /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 1, /*destNode*/ WARP_NODE_35, /*flags*/ WARP_NO_CHECKPOINT),
         WARP_NODE(/*id*/ WARP_NODE_DEATH,   /*destLevel*/ LEVEL_CASTLE, /*destArea*/ 1, /*destNode*/ WARP_NODE_67, /*flags*/ WARP_NO_CHECKPOINT),
