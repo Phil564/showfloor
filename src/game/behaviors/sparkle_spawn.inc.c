@@ -17,7 +17,6 @@ void bhv_sparkle_spawn_loop(void) {
     if (o->oTimer == 0) {
         obj_copy_pos(o, gMarioObject);
         obj_translate_xyz_random(o, 80.0f);
-        ;
         o->oPosY += 20.0f;
     }
 

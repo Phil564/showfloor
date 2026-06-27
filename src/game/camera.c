@@ -6125,7 +6125,11 @@ BAD_RETURN(s32) cutscene_unused_exit_focus_mario(struct Camera *c) {
 BAD_RETURN(s32) cutscene_exit_painting(struct Camera *c) {
     sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
     cutscene_event(cutscene_exit_painting_start, c, 0, 0);
-    cutscene_event(cutscene_unused_exit_focus_mario, c, 24, 24);
+    if (gMarioStates->faceAngle[1] == (s16)0x8000) {
+        cutscene_event(cutscene_unused_exit_focus_mario, c, 24, 24);
+    } else {
+        cutscene_event(cutscene_unused_exit_focus_mario, c, 23, 23);
+    }
     cutscene_event(cutscene_unused_exit_focus_mario, c, 28, -1);
 
     update_camera_yaw(c);
