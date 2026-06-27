@@ -4655,7 +4655,7 @@ void check_blocking_area_processing(const u8 *mode) {
 BAD_RETURN(s32) cam_castle_enter_lobby(struct Camera *c) {
     if (c->mode != CAMERA_MODE_FIXED) {
         sStatusFlags &= ~CAM_FLAG_SMOOTH_MOVEMENT;
-        vec3f_set(sFixedModeBasePosition, 646.0f, 143.0f, -1420.0f);
+        // vec3f_set(sFixedModeBasePosition, 646.0f, 143.0f, -1420.0f);
         c->mode = CAMERA_MODE_FIXED;
     }
 }
