@@ -76,7 +76,7 @@ const LevelScript level_ccm_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_TTM_MOON_SMILEY,       ccm_geo_000DBC),
 
     AREA(/*index*/ 1, snow_slider_geo),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/  1846,  5420, -1641, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x000A0000, /*bhv*/ bhvSpinAirborneWarp),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/  1846,  5372, -1641, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x000A0000, /*bhv*/ bhvSpinAirborneWarp),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  7987, -3993,  4638, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00140000, /*bhv*/ bhvWarp),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  2868,  4320,  -204, /*angle*/ 0, -90, 0, /*bhvParam*/ 0x0F1E0000, /*bhv*/ bhvWarp),
         WARP_NODE(/*id*/ WARP_NODE_0A,      /*destLevel*/ LEVEL_CCM,    /*destArea*/ 1, /*destNode*/ WARP_NODE_0A, /*flags*/ WARP_NO_CHECKPOINT),
