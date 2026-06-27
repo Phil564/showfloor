@@ -3,7 +3,7 @@
     "sample_bank": "instruments",
     "envelopes": {
         "envelope0": [
-            [2, 32700],
+            [4, 32700],
             [1, 32700],
             [32700, 29430],
             "stop"
@@ -131,7 +131,7 @@
             {"release_rate": 60, "pan": 128, "envelope": "envelope4", "sound": "0D_clave"}
         ],
         "inst4": {
-            "release_rate":208,
+            "release_rate":228,
             "normal_range_lo": 24,
             "envelope": "envelope5",
             "sound_lo": "0E_hihat_closed",

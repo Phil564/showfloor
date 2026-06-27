@@ -2357,6 +2357,7 @@ const BehaviorScript bhvCelebrationStar[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     BILLBOARD(),
+    SET_INT(oAnimState, -1),
     CALL_NATIVE(bhv_celebration_star_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_celebration_star_loop),
@@ -2382,7 +2383,6 @@ const BehaviorScript bhvStarDust[] = {
     SET_INT(oAnimState, -1),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_star_dust),
-        ANIMATE_TEXTURE(oAnimState, 2),
     END_LOOP(),
 };
 
