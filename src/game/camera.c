@@ -6018,10 +6018,10 @@ BAD_RETURN(s32) cutscene_intro(struct Camera *c) {
 }
 
 BAD_RETURN(s32) cutscene_intro_end(struct Camera *c) {
-    if (gDialogBoxAngle > 30.0f) {
+    if (gDialogBoxAngle > 25.0f) {
         if (c->pos[1] < 382.f) {
-            c->pos[1] += 1.450f;
-            c->pos[2] -= 2.700f;
+            c->pos[1] += 1.0f;
+            c->pos[2] -= 2.5f;
         } else {
             sStatusFlags |= (CAM_FLAG_SMOOTH_MOVEMENT | CAM_FLAG_UNUSED_CUTSCENE_ACTIVE);
             gCutsceneTimer = CUTSCENE_STOP;
