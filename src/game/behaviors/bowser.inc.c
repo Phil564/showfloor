@@ -1076,7 +1076,7 @@ void bowser_act_dance(void) {
  * Spawns a Key in BitDW/BitFS or Grand Star in BitS
  */
 void bowser_spawn_collectable(void) {
-    spawn_object_relative(0, 0, 200.0f, 200.0f, o, MODEL_STAR, bhvStar);
+    spawn_object_relative(0, 0, 200.0f, -300.0f, o, MODEL_STAR, bhvStar);
     obj_spawn_loot_yellow_coins(o, 20, 4.0f);
 }
 
