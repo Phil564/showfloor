@@ -502,8 +502,8 @@ void reset_dialog_render_state(void) {
     gDialogResponse = DIALOG_RESPONSE_NONE;
 }
 
-#define X_VAL1 -1.0f
-#define Y_VAL1 0.0
+#define X_VAL1 0.0f
+#define Y_VAL1 0.0f
 #define Y_VAL2 4.0f
 
 void render_dialog_box_type(struct DialogEntry *dialog, s8 linesPerBox) {
@@ -550,7 +550,7 @@ void handle_dialog_scroll_page_state(s8 lineNum, s8 totalLines, s8 *pageState, s
         *pageState = DIALOG_PAGE_STATE_SCROLL;
         return;
     }
-    create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL3, 2 - (lineNum * Y_VAL3), 0);
+    create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL3, 3 - (lineNum * Y_VAL3), 0);
 
     *linePos = 0;
     *xMatrix = 1;
@@ -624,7 +624,7 @@ void handle_dialog_text_and_pages(struct DialogEntry *dialog) {
         create_dl_translation_matrix(MENU_MTX_NOPUSH, 0, (f32) gDialogScrollOffsetY, 0);
     }
 
-    create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL3, 2 - lineNum * Y_VAL3, 0);
+    create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL3, 3 - lineNum * Y_VAL3, 0);
 
     while (pageState == DIALOG_PAGE_STATE_NONE) {
         strChar = str[strIndex];
