@@ -62,7 +62,10 @@ void bhv_celebration_star_sparkle_loop(void) {
 }
 
 void bhv_star_dust(void) {
-    if (o->oTimer == 30) {
+    if (o->oTimer % 2 == 0)
+        o->oAnimState++;
+    
+    if (o->oTimer == 32) {
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
     }
 }

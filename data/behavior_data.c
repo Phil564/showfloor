@@ -2382,7 +2382,6 @@ const BehaviorScript bhvStarDust[] = {
     SET_INT(oAnimState, -1),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_star_dust),
-        ANIMATE_TEXTURE(oAnimState, 2),
     END_LOOP(),
 };
 
