@@ -5997,35 +5997,41 @@ BAD_RETURN(s32) cutscene_non_painting_death(struct Camera *c) {
 }
 
 BAD_RETURN(s32) cutscene_intro_init(struct Camera *c) {
-    c->pos[1] += 144.0f; // original value was 145
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, -524, 0, 430);
+    c->pos[1] += 0x90;
+    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, -529, 0, 1100); // verify
 }
 
 BAD_RETURN(s32) cutscene_intro_rotate_camera(struct Camera *c) {
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, -456);
-
+    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, -462);  // seems very close
     if (gCutsceneTimer > 60) {
-        c->pos[0] = -1500.0f;
+        c->pos[0] = c->focus[0];
     }
 }
 
 BAD_RETURN(s32) cutscene_intro_zoom(struct Camera *c) {
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 16, 0);
-    c->pos[1] += 0.50f;
-    c->pos[2] -= 1.1f;
+
+    // end values
+    f32 targetY = c->focus[1] - 12 ;
+    f32 targetZ = c->focus[2] + 275.0f ;
+    
+    // approach the end values by 8% each frame
+    approach_f32_asymptotic_bool(&c->pos[1], targetY, 0.08f) ;
+    approach_f32_asymptotic_bool(&c->pos[2], targetZ, 0.08f) ;
+
+
 }
 
 BAD_RETURN(s32) cutscene_intro(struct Camera *c) {
     cutscene_event(cutscene_intro_init, c, 0, 0);
-    cutscene_event(cutscene_intro_rotate_camera, c, 0, 60);
-    cutscene_event(cutscene_intro_zoom, c, 62, 75);
+    cutscene_event(cutscene_intro_rotate_camera, c, 0, 61);
+    cutscene_event(cutscene_intro_zoom, c, 64, 79);
 }
 
 BAD_RETURN(s32) cutscene_intro_end(struct Camera *c) {
     if (gDialogBoxAngle > 25.0f) {
         if (c->pos[1] < 382.f) {
-            c->pos[1] += 1.0f;
-            c->pos[2] -= 2.5f;
+            c->pos[1] += 1.f;
+            c->pos[2] -= 2.4f;
         } else {
             sStatusFlags |= (CAM_FLAG_SMOOTH_MOVEMENT | CAM_FLAG_UNUSED_CUTSCENE_ACTIVE);
             gCutsceneTimer = CUTSCENE_STOP;
