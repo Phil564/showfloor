@@ -1,7 +1,5 @@
 // celebration_star.inc.c
 
-/* TO-DO: clean this up */
-
 void bhv_celebration_star_init(void) {
     o->oHomeX = gMarioObject->header.gfx.pos[0];
     o->oPosY = gMarioObject->header.gfx.pos[1] + 30.0f;
@@ -15,27 +13,29 @@ void bhv_celebration_star_init(void) {
 void celeb_star_act_spin_around_mario(void) {
     o->oPosX = o->oHomeX + sins(o->oMoveAngleYaw) * (f32) (o->oCelebStarDiameterOfRotation / 2);
     o->oPosZ = o->oHomeZ + coss(o->oMoveAngleYaw) * (f32) (o->oCelebStarDiameterOfRotation / 2);
-    o->oPosY += 5.0f;
+    o->oPosY += 4.0f;
     o->oMoveAngleYaw += 0x2000;
     o->oAnimState++;
 
-    if (o->oTimer == 46)
+    if (o->oTimer > 45)
         o->oAction = CELEB_STAR_ACT_FACE_CAMERA;
     if (o->oTimer < 40) {
         spawn_object(o, MODEL_SPARKLES, bhvCelebrationStarSparkle);
         o->oCelebStarDiameterOfRotation++;
-    } else
+    } else {
         o->oCelebStarDiameterOfRotation -= 20;
+    }
 }
 
 void celeb_star_act_face_camera(void) {
     if (o->oTimer == 0) {
-        spawn_object(o, MODEL_SPARKLES, bhvCelebrationStarSparkle);
+        spawn_object(o, MODEL_SPARKLES, bhvCelebrationStarSparkle); // spawns the sparkle in the first frame but leaves the scale used earlier (0.4)
+    } else if (o->oTimer < 10) {
+        cur_obj_scale((f32) o->oTimer / 10.0); // then scales the star on the next 9 frames
     }
 
     if (o->oTimer < 10) {
         o->oAnimState++;
-        cur_obj_scale((f32) o->oTimer / 10.0);
     }
 }
 
