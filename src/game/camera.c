@@ -2802,7 +2802,11 @@ void init_camera(struct Camera *c) {
             break;
         case LEVEL_CASTLE:
             vec3f_set(marioOffset, 0.f, 0.f, 0xc0);
-            sFOVState.fov = 64.f;
+            if (gMarioStates->faceAngle[1] == (s16)0x8000) { // reimplement
+                sFOVState.fov = 64.f;
+            } else {
+                sFOVState.fov = 45.f;
+            }
             break;
     }
     if (c->mode == CAMERA_MODE_8_DIRECTIONS) {
