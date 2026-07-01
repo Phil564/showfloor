@@ -229,6 +229,17 @@ void bhv_hoot_loop(void) {
         case HOOT_AVAIL_ASLEEP_IN_TREE:
             if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 50)) {
                 o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+                o->oHootAvailability = HOOT_AVAIL_WANTS_TO_TALK;
+            }
+            break;
+
+        case HOOT_AVAIL_WANTS_TO_TALK:
+            hoot_awake_loop();
+
+            if ((gMarioState->action & ACT_GROUP_MASK) == ACT_GROUP_STATIONARY || 
+                (gMarioState->action & ACT_GROUP_MASK) == ACT_GROUP_MOVING) {
+                level_set_transition(-1, NULL);
+                create_dialog_box(DIALOG_044);
                 o->oHootAvailability = HOOT_AVAIL_READY_TO_FLY;
             }
             break;
