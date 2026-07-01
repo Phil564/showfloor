@@ -1096,6 +1096,7 @@ static void advance_cutscene_step(struct MarioState *m) {
     m->actionArg++;
 }
 
+// not sure about these actiontimers
 static void intro_cutscene_wait_for_dialog(struct MarioState *m) {
     set_mario_animation(m, MARIO_ANIM_FIRST_PERSON);
 
@@ -1103,11 +1104,11 @@ static void intro_cutscene_wait_for_dialog(struct MarioState *m) {
         m->statusForCamera->cameraEvent = CAM_EVENT_START_INTRO;
     }
 
-    if (m->actionTimer == 67) {
+    if (m->actionTimer == 64) {
         create_dialog_box(33);
-    } else if (m->actionTimer >= 67 && gMenuState < 3 && gDialogBoxAngle < 65.0f) {
+    } else if (m->actionTimer >= 64 && gMenuState < 3 && gDialogBoxAngle < 65.0f) {
         set_anim_to_frame(m, m->marioObj->header.gfx.animInfo.animFrame);
-    } else if (m->actionTimer >= 67 && gMenuState == 3) {
+    } else if (m->actionTimer >= 64 && gMenuState == 3) {
         if (gDialogBoxAngle < 30.0f) {
             set_anim_to_frame(m, m->marioObj->header.gfx.animInfo.animFrame);
         } else {
