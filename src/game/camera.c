@@ -977,7 +977,7 @@ void update_yaw_and_dist_from_c_up(UNUSED struct Camera *c) {
     f32 dist = 1000.f;
 
     sModeOffsetYaw = sModeInfo.transitionStart.yaw - sAreaYaw;
-    //sLakituDist = sModeInfo.transitionStart.dist - dist;
+    sLakituDist = sModeInfo.transitionStart.dist - dist;
     // No longer in C-Up
     gCameraMovementFlags &= ~CAM_MOVING_INTO_MODE;
 }
