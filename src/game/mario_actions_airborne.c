@@ -519,7 +519,7 @@ s32 act_twirling(struct MarioState *m) {
         yawVelTarget = 0x1800;
     }
 
-    m->angleVel[1] = approach_s32(m->angleVel[1], yawVelTarget, 350, 512);
+    m->angleVel[1] = approach_s32(m->angleVel[1], yawVelTarget, 0x180, 0x200);
     m->twirlYaw += m->angleVel[1];
 
     switch (m->actionArg) {
