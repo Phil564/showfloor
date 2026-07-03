@@ -896,12 +896,14 @@ void radial_camera_move(struct Camera *c) {
         } else {
             // sModeOffsetYaw only updates when mario is moving
             if (c->mode == CAMERA_MODE_RADIAL) {
-                rotateSpeed = 0x80;
+                rotateSpeed = 150;
+
+                // level-specific spawn cams
                 if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
                     if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
-                            rotateSpeed = 0xA8;
+                        rotateSpeed = 0xA8;
                     } else if (gCurrLevelNum == LEVEL_WF) {
-                        rotateSpeed = 0x3A;
+                        rotateSpeed = 0x38;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
                     } else if (gCurrLevelNum == LEVEL_DDD) {
@@ -910,7 +912,7 @@ void radial_camera_move(struct Camera *c) {
                 }
                 
                 // turning logic
-                if (gMarioStates->forwardVel != 0) {
+                if ((gMarioStates->forwardVel != 0)) {
                     if (turnYaw < 0) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
                     } else if (turnYaw > 0) { 
