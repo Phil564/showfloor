@@ -899,7 +899,7 @@ void radial_camera_move(struct Camera *c) {
                 rotateSpeed = 0x80;
                 if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
                     if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
-                        rotateSpeed = 0xA8;
+                            rotateSpeed = 0xA8;
                     } else if (gCurrLevelNum == LEVEL_WF) {
                         rotateSpeed = 0x3A;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
@@ -6325,11 +6325,10 @@ BAD_RETURN(s32) cutscene_door_move_behind_mario(struct Camera *c) {
     vec3s_set(sCutsceneVars[0].angle, 0, sMarioCamState->faceAngle[1] + doorRotation, 0);
     
     // set position offset - [0] is in/out, [2] is side to side
-    vec3f_set(camOffset, 0.f, 30.f, 250.f);
     if (doorRotation == 0) { // pulling door
-        camOffset[0] = 160.f;
+        vec3f_set(camOffset, 150.f, 30.f, 250.f);
     } else {                 // pushing door
-        camOffset[0] = -90.f;
+        vec3f_set(camOffset, -90.f, 30.f, 250.f);
     }
 
     // apply the offset relative to mario's rotation
