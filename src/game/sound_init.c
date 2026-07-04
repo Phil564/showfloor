@@ -193,7 +193,7 @@ void play_bowser_hallway_music(void) {
 
     /* Bowser Hallway? */
     if (gCurrLevelNum == LEVEL_CASTLE) {
-        if (gMarioState->floor != NULL && gMarioState->floor->room == 5) {
+        if (gMarioState->floor != NULL && gMarioState->floor->room == 3) {
             if (gMarioState->pos[2] > -3932.0f) {
                 shouldPlay = TRUE;
             }
