@@ -101,7 +101,7 @@ const LevelScript level_castle_inside_entry[] = {
     // It is possible that star doors were originally going to have numbers on them, similar to the other locked doors.
 
     AREA(/*index*/ 1, castle_geo),
-        OBJECT(/*model*/ MODEL_NONE,              /*pos*/    0, 614, -6261, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00140000, /*bhv*/ bhvCastleFloorTrap),
+        OBJECT(/*model*/ MODEL_NONE,              /*pos*/    0, 614, -6364, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00140000, /*bhv*/ bhvCastleFloorTrap),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR_A,     /*pos*/-1690, 205, -2320, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR_B,     /*pos*/ -947,   0, -3061, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         OBJECT(/*model*/ MODEL_CASTLE_DOOR_C,     /*pos*/  947,   0, -3061, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
