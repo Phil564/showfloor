@@ -303,7 +303,7 @@ Gfx *geo_switch_mario_hand_grab_pos(s32 callContext, struct GraphNode *b, Mat4 *
                     vec3s_set(asHeldObj->translation, 145, -173, 180);
                     break;
                 case GRAB_POS_BOWSER:
-                    vec3s_set(asHeldObj->translation, 80, -220, 1260);
+                    vec3s_set(asHeldObj->translation, 80, -180, 1320);
                     break;
             }
         }

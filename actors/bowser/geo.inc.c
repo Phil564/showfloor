@@ -2,7 +2,7 @@
 const GeoLayout bowser_geo_0000D8[] = {
     GEO_SHADOW(SHADOW_CIRCLE_9_VERTS, 0x9B, 400),
     GEO_OPEN_NODE(),
-        GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, bowser_seg6_dl_06040210),
+        GEO_ANIMATED_PART(LAYER_OPAQUE, 0, -8, -24, bowser_seg6_dl_06040210),
         GEO_OPEN_NODE(),
             GEO_ANIMATED_PART(LAYER_OPAQUE, -89, -2, -18, NULL),
             GEO_OPEN_NODE(),
