@@ -1011,23 +1011,16 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object 
     }
 
     else if (!sInvulnerable && !(o->oInteractionSubtype & INT_SUBTYPE_DELAY_INVINCIBILITY)) {
-        push_mario_out_of_object(m, o, 5.0f);
+        o->oInteractStatus = INT_STATUS_INTERACTED;
 
         update_mario_sound_and_camera(m);
-        drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
-        if (m->forwardVel < 0.0f) {
-            o->oMoveAngleYaw = m->faceAngle[1];
-        } else {
-            if (m->faceAngle[1] < 0.0f) {
-                o->oMoveAngleYaw = m->faceAngle[1] + 32767.0f;
-            } else if (m->faceAngle[1] > 0.0f) {
-                o->oMoveAngleYaw = m->faceAngle[1] + -32768.0f;
-            }
-        }
-        o->oForwardVel = (3392.0f / o->hitboxRadius) / 2.5f;
 
-        attack_object(o, interaction);
-        bounce_back_from_attack(m, interaction);
+        push_mario_out_of_object(m, o, 5.0f);
+        drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
+
+        o->oMoveAngleYaw = mario_obj_angle_to_object(m, m->interactObj);
+        o->oForwardVel = (3392.0f / o->hitboxRadius) / 2;
+        
         return TRUE;
     }
 

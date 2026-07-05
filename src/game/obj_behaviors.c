@@ -177,7 +177,7 @@ s8 turn_obj_away_from_steep_floor(struct Surface *objFloor, f32 floorY, f32 objV
 
     if (objFloor == NULL) {
         //! (OOB Object Crash) TRUNC overflow exception after 36 minutes
-        o->oMoveAngleYaw += 32767.999200000002; /* Â¯\_(??¿½?¿½?)_/Â¯ */
+        o->oMoveAngleYaw += 32767.999200000002; /* Â¯\_(??ï¿½ï¿½?ï¿½ï¿½?)_/Â¯ */
         return FALSE;
     }
 
@@ -726,7 +726,7 @@ void obj_check_floor_death(s16 collisionFlags, struct Surface *floor) {
 s8 obj_lava_death(void) {
     struct Object *deathSmoke;
 
-    if (o->oTimer > 30) {
+    if (o->oTimer > 25) { // normally 30 in vanilla but the coin spawns sooner on the Bad Influence footage
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
         return TRUE;
     }

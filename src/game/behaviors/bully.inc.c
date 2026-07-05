@@ -144,7 +144,7 @@ void bully_spawn_coin(void) {
     struct Object *coin = spawn_object(o, MODEL_YELLOW_COIN, bhvMovingYellowCoin);
     coin->oForwardVel = 10.0f;
     coin->oVelY = 100.0f;
-    coin->oPosY = o->oPosY + 310.0f;
+    coin->oPosY = o->oPosY;
     coin->oMoveAngleYaw = (f32) (o->oBullyMarioCollisionAngle + 0x8000) + random_float() * 1024.0f;
 }
 
@@ -202,7 +202,7 @@ void bhv_bully_loop(void) {
             break;
 
         case BULLY_ACT_LAVA_DEATH:
-            cur_obj_scale(0.0f);
+            cur_obj_scale((f32) 1.0 - o->oTimer / 25.0);
             bully_act_level_death();
             break;
 
