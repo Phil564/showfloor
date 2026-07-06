@@ -33,7 +33,7 @@ static s16 sPowerMeterStoredHealth;
 
 static struct PowerMeterHUD sPowerMeterHUD = {
     POWER_METER_HIDDEN,
-    139,
+    138,
     166,
     1.0,
 };
@@ -257,18 +257,18 @@ void render_hud_power_meter(void) {
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    print_text(30, HUD_TOP_Y, ","); // 'Mario Head' glyph
-    print_text(46, HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(60, HUD_TOP_Y, "%d", gHudDisplay.lives);
+    print_text(29, HUD_TOP_Y, ","); // 'Mario Head' glyph
+    print_text(45, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(59, HUD_TOP_Y, "%d", gHudDisplay.lives);
 }
 
 /**
  * Renders the amount of coins collected.
  */
 void render_hud_coins(void) {
-    print_text(170, HUD_TOP_Y - 17, "+"); // 'Coin' glyph
-    print_text(186, HUD_TOP_Y - 17, "*"); // 'X' glyph
-    print_text_fmt_int(200, HUD_TOP_Y - 17, "%d", gHudDisplay.coins);
+    print_text(169, HUD_TOP_Y - 17, "+"); // 'Coin' glyph
+    print_text(185, HUD_TOP_Y - 17, "*"); // 'X' glyph
+    print_text_fmt_int(199, HUD_TOP_Y - 17, "%d", gHudDisplay.coins);
 }
 
 /**
@@ -276,9 +276,9 @@ void render_hud_coins(void) {
  * Disables "X" glyph when Mario has 100 stars or more.
  */
 void render_hud_stars(void) {
-    print_text(170, HUD_TOP_Y, "-"); // 'Star' glyph
-    print_text(186, HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(200, HUD_TOP_Y, "%d", gHudDisplay.stars);
+    print_text(169, HUD_TOP_Y, "-"); // 'Star' glyph
+    print_text(185, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(199, HUD_TOP_Y, "%d", gHudDisplay.stars);
 }
 
 /**
