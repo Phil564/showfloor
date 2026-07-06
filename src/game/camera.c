@@ -800,14 +800,14 @@ void radial_camera_move(struct Camera *c) {
     s16 turnYaw = atan2s(gMarioState->vel[2], gMarioState->vel[0]) - atan2s(areaDistZ, areaDistX);
 
     // Difference between current yaw and area-center-to-mario angle
-    //s16 yawOffset = calculate_yaw(sMarioCamState->pos, c->pos) - atan2s(areaDistZ, areaDistX);
+    s16 yawOffset = calculate_yaw(sMarioCamState->pos, c->pos) - atan2s(areaDistZ, areaDistX);
 
-    /*if (yawOffset > maxAreaYaw) {
+    if (yawOffset > maxAreaYaw) {
         yawOffset = maxAreaYaw;
     }
     if (yawOffset < minAreaYaw) {
         yawOffset = minAreaYaw;
-    }*/
+    }
 
     // Check if mario stepped on a surface that rotates the camera. For example, when mario enters the
     // gate in BoB, the camera turns right to face up the hill path
@@ -887,7 +887,7 @@ void radial_camera_move(struct Camera *c) {
     }
 
     // ! HI GUYS !
-    // this is the main camera turning function
+    // this is the radial camera turning function
 
     if (!(gCameraMovementFlags & CAM_MOVE_ROTATE)) {
         // If not rotating, rotate away from walls obscuring mario from view
@@ -896,22 +896,32 @@ void radial_camera_move(struct Camera *c) {
         } else {
             // sModeOffsetYaw only updates when mario is moving
             if (c->mode == CAMERA_MODE_RADIAL) {
-                rotateSpeed = 150;
 
-                // level-specific spawn cams
-                if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
-                    if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
-                        rotateSpeed = 0xA8;
-                    } else if (gCurrLevelNum == LEVEL_WF) {
-                        rotateSpeed = 0x38;
-                    } else if (gCurrLevelNum == LEVEL_LLL) {
-                        rotateSpeed = 0x10;
-                    } else if (gCurrLevelNum == LEVEL_DDD) {
-                        rotateSpeed = 0x60;
-                    }
-                }
+                /*
+                 * Level specific rotation and spawn cams.
+                 * Not sure if level-specific rotation should
+                 * exist, or if something is wrong
+                 */
                 
-                // turning logic
+                switch (gCurrLevelNum) {
+                    case LEVEL_CCM:
+                        rotateSpeed = 150;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0xA8;
+                        break;
+                    case LEVEL_WF:
+                        rotateSpeed = 100;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x38;
+                        break;
+                    case LEVEL_LLL:
+                        rotateSpeed = 100;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x10;
+                        break;
+                    case LEVEL_DDD:
+                        rotateSpeed = 100;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x60;
+                        break;
+                }
+
                 if ((gMarioStates->forwardVel != 0)) {
                     if (turnYaw < 0) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
@@ -919,7 +929,6 @@ void radial_camera_move(struct Camera *c) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, minAreaYaw, absf(sins(turnYaw) * rotateSpeed));
                     }
                 }
-                
             }
         }
     }
@@ -1779,18 +1788,7 @@ s16 update_default_camera(struct Camera *c) {
             dist = 800.f;
             sStatusFlags |= CAM_FLAG_BLOCK_SMOOTH_MOVEMENT;
         }
-    } else if (xzDist < 180) {
-        // Turn rapidly if very close to mario
-        c->pos[0] += (180 - xzDist) * sins(yaw);
-        c->pos[2] += (180 - xzDist) * coss(yaw);
-        if (sCSideButtonYaw == 0) {
-            nextYawVel = 0x1000;
-            sYawSpeed = 0;
-            if (sMarioCamState->unused != 1) {
-                vec3f_get_dist_and_angle(sMarioCamState->pos, c->pos, &dist, &pitch, &yaw);
-            }
-        }
-    }
+    } 
 
     if (-16 < gPlayer1Controller->stickY) {
         c->yaw = yaw;
@@ -1868,11 +1866,15 @@ s16 update_default_camera(struct Camera *c) {
     
 
     // intro cutscene camera behavior,, seems a little hacky?
-    if (xzDist < 180.f && sMarioCamState->unused == 1) {
+    /*if (xzDist < 180.f && sMarioCamState->unused == 1) {
         c->pos[1] = marioFloorHeight + (300 - xzDist);
     } else if ((xzDist > 300.f && sMarioCamState->unused != 0)
                || gCurrLevelNum != LEVEL_CASTLE_GROUNDS) {
         sMarioCamState->unused = 0;
+    }*/
+    if (xzDist < 180) {
+        // Turn rapidly if very close to mario
+        c->pos[1] = marioFloorHeight + (300 - xzDist);
     }
 
     // Make lakitu fly above the gas
@@ -6069,7 +6071,7 @@ BAD_RETURN(s32) cutscene_intro_end(struct Camera *c) {
         } else {
             sStatusFlags |= (CAM_FLAG_SMOOTH_MOVEMENT | CAM_FLAG_UNUSED_CUTSCENE_ACTIVE);
             gCutsceneTimer = CUTSCENE_STOP;
-            sMarioCamState->unused = 1;
+            // sMarioCamState->unused = 1;
             c->cutscene = 0;
         }
     }
