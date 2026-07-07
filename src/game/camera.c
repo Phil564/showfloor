@@ -742,14 +742,14 @@ s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
 
     if ((gCurrLevelNum == LEVEL_DDD) && (gCameraMovementFlags & CAM_FLAG_SPAWN)) {
         yOff = 0x140;
-        sAreaYaw = camYaw - sModeOffsetYaw;
-        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
-        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
     } else {
-        sAreaYaw = camYaw - sModeOffsetYaw;
-        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
-        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+        yOff = 125.f;
     }
+
+    sAreaYaw = camYaw - sModeOffsetYaw;
+    calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
+    focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    
 
    
     return camYaw;
@@ -785,6 +785,10 @@ s32 update_8_directions_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
  * If sModeOffsetYaw is 0, the camera points directly at the area center point.
  */
 void radial_camera_move(struct Camera *c) {
+
+    // whatever
+    static Vec3f sPrevFrame = {0, 0, 0};
+
     s16 maxAreaYaw = DEGREES(60);
     s16 minAreaYaw = DEGREES(-60);
     s16 rotateSpeed = 0x400;
@@ -796,12 +800,17 @@ void radial_camera_move(struct Camera *c) {
     f32 areaDistZ = sMarioCamState->pos[2] - c->areaCenZ;
     UNUSED s32 filler;
 
+    // true external velocities
+    f32 trueVelX = sMarioCamState->pos[0] - sPrevFrame[0];
+    f32 trueVelZ = sMarioCamState->pos[2] - sPrevFrame[2];
+    f32 trueSpeed = sqrtf(trueVelX * trueVelX + trueVelZ * trueVelZ);
+
     // The angle from the camera to the pivot subtracted from mario's moving angle
-    s16 turnYaw = atan2s(gMarioState->vel[2], gMarioState->vel[0]) - atan2s(areaDistZ, areaDistX);
+    s16 turnYaw = atan2s(trueVelZ, trueVelX) - atan2s(areaDistZ, areaDistX);
 
     // Difference between current yaw and area-center-to-mario angle
     s16 yawOffset = calculate_yaw(sMarioCamState->pos, c->pos) - atan2s(areaDistZ, areaDistX);
-
+    
     if (yawOffset > maxAreaYaw) {
         yawOffset = maxAreaYaw;
     }
@@ -904,17 +913,17 @@ void radial_camera_move(struct Camera *c) {
                  */
                 
                 switch (gCurrLevelNum) {
-                    case LEVEL_CCM:
-                        rotateSpeed = 150;
-                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0xA8;
-                        break;
                     case LEVEL_WF:
-                        rotateSpeed = 100;
+                        rotateSpeed = 150;
                         if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x38;
                         break;
                     case LEVEL_LLL:
                         rotateSpeed = 100;
                         if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x10;
+                        break;
+                    case LEVEL_CCM:
+                        rotateSpeed = 160;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0xAF;
                         break;
                     case LEVEL_DDD:
                         rotateSpeed = 100;
@@ -922,7 +931,7 @@ void radial_camera_move(struct Camera *c) {
                         break;
                 }
 
-                if ((gMarioStates->forwardVel != 0)) {
+                if ((trueSpeed > 1.f)) {
                     if (turnYaw < 0) {
                         camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
                     } else if (turnYaw > 0) { 
@@ -940,6 +949,8 @@ void radial_camera_move(struct Camera *c) {
     if (sModeOffsetYaw < -0x5554) {
         sModeOffsetYaw = -0x5554;
     }
+
+    vec3f_copy(sPrevFrame, sMarioCamState->pos);
 }
 
 /**
