@@ -48,7 +48,7 @@ ALIGNED8 static const Texture ccm_seg7_texture_07003100[] = {
 
 // 0x09000000
 ALIGNED8 static const Texture ccm_seg7_texture_start[] = {
-#include "levels/ccm/9.ia16.inc.c"
+#include "levels/ccm/9.rgba16.inc.c"
 };
 
 // 0x09000000
