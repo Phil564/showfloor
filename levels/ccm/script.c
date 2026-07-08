@@ -19,7 +19,7 @@
 static const LevelScript script_func_local_1[] = {
     OBJECT(/*model*/ MODEL_PENGUIN,          /*pos*/  7346, -4096,  6186, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00020000, /*bhv*/ bhvSmallPenguin),
     OBJECT(/*model*/ MODEL_PENGUIN,          /*pos*/  7488, -4096,  6083, /*angle*/ 0,   0, 0, /*bhvParam*/ 0x00020000, /*bhv*/ bhvSmallPenguin),
-    OBJECT(/*model*/ MODEL_PENGUIN,          /*pos*/  7863, -4096, -7915, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00020000, /*bhv*/ bhvSmallPenguin),
+    OBJECT(/*model*/ MODEL_PENGUIN,          /*pos*/  3416, -2778, 3420, /*angle*/ 0,  90, 0, /*bhvParam*/ 0x00020000, /*bhv*/ bhvSmallPenguin),
     OBJECT(/*model*/ MODEL_PENGUIN,          /*pos*/  2147,  4096, -1261, /*angle*/ 0, 180, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvSmallPenguin),
     RETURN(),
 };
