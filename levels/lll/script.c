@@ -153,7 +153,7 @@ const LevelScript level_lll_entry[] = {
         JUMP_LINK(script_func_local_5),
         TERRAIN(/*terrainData*/ fire_bubble_collision),
         MACRO_OBJECTS(/*objList*/ fire_bubble_macro),
-        SHOW_DIALOG(/*index*/ 0x00, DIALOG_097),
+        SHOW_DIALOG(/*index*/ 0x00, MESS_FAIREBAR),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0000, /*seq*/ SEQ_LEVEL_HOT),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_STONE),
     END_AREA(),

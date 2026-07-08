@@ -313,14 +313,7 @@ void general_star_dance_handler(struct MarioState *m) {
                 break;
 
             case 80:
-                if (!(m->actionArg & 1)) {
-                    level_trigger_warp(m, WARP_OP_STAR_EXIT);
-                } else {
-                    enable_time_stop();
-                    create_dialog_box_with_response(gLastCompletedStarNum == 7 ? DIALOG_013
-                                                                               : DIALOG_014);
-                    m->actionState = 1;
-                }
+                level_trigger_warp(m, WARP_OP_STAR_EXIT);
                 break;
         }
     }
@@ -464,7 +457,7 @@ s32 act_unlocking_star_door(struct MarioState *m) {
         case 3:
             if (is_anim_at_end(m)) {
                 save_file_set_flags(get_door_save_file_flag(m->usedObj));
-                set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, DIALOG_038);
+                //set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, DIALOG_038);
             }
             break;
     }
@@ -1105,7 +1098,7 @@ static void intro_cutscene_wait_for_dialog(struct MarioState *m) {
     }
 
     if (m->actionTimer == 64) {
-        create_dialog_box(33);
+        create_dialog_box(MESS_MAIN_OUT);
     } else if (m->actionTimer >= 64 && gMenuState < 3 && gDialogBoxAngle < 65.0f) {
         set_anim_to_frame(m, m->marioObj->header.gfx.animInfo.animFrame);
     } else if (m->actionTimer >= 64 && gMenuState == 3) {

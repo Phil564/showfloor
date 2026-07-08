@@ -5097,7 +5097,7 @@ s16 cutscene_object_with_dialog(u8 cutscene, struct Object *o, s16 dialogID) {
             if (dialogID != DIALOG_NONE) {
                 sCutsceneDialogID = dialogID;
             } else {
-                sCutsceneDialogID = DIALOG_001;
+                sCutsceneDialogID = 1;
             }
         } else {
             response = sCutsceneDialogResponse;

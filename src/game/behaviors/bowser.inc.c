@@ -1164,11 +1164,6 @@ void bowser_dead_hide(void) {
 }
 
 /**
- * Dialog values that are set on each stage Bowser's is defeated
- */
-s16 sBowserDefeatedDialogText[3] = { DIALOG_119, DIALOG_120, DIALOG_121 };
-
-/**
  * Bowser's dead sequence that plays in BitDW/BitFS
  * Returns TRUE once done
  */
@@ -1198,9 +1193,9 @@ s32 bowser_dead_final_stage_ending(void) {
     if (o->oBowserTimer < 2) {
         // Set dialog whenever you have 120 stars or not
         if (gHudDisplay.stars < 120) {
-            dialogID = DIALOG_121;
+            //dialogID = DIALOG_121;
         } else {
-            dialogID = DIALOG_163;
+            //dialogID = DIALOG_163;
         }
         // Lower music volume
         if (o->oBowserTimer == 0) {

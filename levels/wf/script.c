@@ -119,7 +119,7 @@ const LevelScript level_wf_entry[] = {
         JUMP_LINK(script_func_local_4),
         TERRAIN(/*terrainData*/ mountain_collision),
         MACRO_OBJECTS(/*objList*/ mountain_macro),
-        SHOW_DIALOG(/*index*/ 0x00, DIALOG_030),
+        SHOW_DIALOG(/*index*/ 0x00, MESS_MOUNT),
         SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0005, /*seq*/ SEQ_LEVEL_GRASS),
         TERRAIN_TYPE(/*terrainType*/ TERRAIN_STONE),
     END_AREA(),
