@@ -692,7 +692,7 @@ void set_camera_height(struct Camera *c, f32 goalHeight) {
             goalHeight = camFloorHeight;
             c->pos[1] = goalHeight;
         }
-        approach_camera_height(c, goalHeight, 32.f);
+        approach_camera_height(c, goalHeight, 30.f);
         if (camCeilHeight != CELL_HEIGHT_LIMIT) {
             camCeilHeight -= baseOff;
             if ((c->pos[1] > camCeilHeight && sMarioGeometry.currFloorHeight + baseOff < camCeilHeight)
@@ -923,7 +923,7 @@ void radial_camera_move(struct Camera *c) {
                         break;
                     case LEVEL_CCM:
                         rotateSpeed = 160;
-                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0xAF;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0xB0;
                         break;
                     case LEVEL_DDD:
                         rotateSpeed = 100;
@@ -1575,7 +1575,7 @@ s32 mode_behind_mario(struct Camera *c) {
         newPos[1] = marioState->waterLevel + 120;
     }
 
-    approach_camera_height(c, newPos[1], 32.f);
+    approach_camera_height(c, newPos[1], 30.f);
     waterHeight = find_water_level(c->pos[0], c->pos[2]) + 100.f;
     if (c->pos[1] <= waterHeight) {
         gCameraMovementFlags |= CAM_MOVE_SUBMERGED;
@@ -2687,6 +2687,10 @@ void update_camera(struct Camera *c) {
 
     
     gLakituState.lastFrameAction = sMarioCamState->action;
+
+    //print_text_fmt_int(16, 48, "X %d", c->pos[0]);
+    //print_text_fmt_int(16, 32, "Y %d", c->pos[1]);
+    //print_text_fmt_int(16, 16, "Z %d", c->pos[2]);
 }
 
 /**
@@ -5093,7 +5097,7 @@ s16 cutscene_object_with_dialog(u8 cutscene, struct Object *o, s16 dialogID) {
             if (dialogID != DIALOG_NONE) {
                 sCutsceneDialogID = dialogID;
             } else {
-                sCutsceneDialogID = DIALOG_001;
+                sCutsceneDialogID = 1;
             }
         } else {
             response = sCutsceneDialogResponse;
