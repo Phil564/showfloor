@@ -17,7 +17,7 @@ const GeoLayout ccm_geo_000C84[] = {
             GEO_OPEN_NODE(),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, slider_6_dl_mesh),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, slider_7_dl_mesh),
-               GEO_DISPLAY_LIST(LAYER_TRANSPARENT, slider_8_dl_mesh),
+               //GEO_DISPLAY_LIST(LAYER_TRANSPARENT, slider_8_dl_mesh),
                GEO_RENDER_OBJ(),
                GEO_ASM(0, geo_envfx_main),
             GEO_CLOSE_NODE(),

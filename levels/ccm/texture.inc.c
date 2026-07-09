@@ -53,5 +53,5 @@ ALIGNED8 static const Texture ccm_seg7_texture_start[] = {
 
 // 0x09000000
 ALIGNED8 static const Texture ccm_seg7_texture_jump[] = {
-#include "levels/ccm/10.ia16.inc.c"
+#include "levels/ccm/10.rgba16.inc.c"
 };

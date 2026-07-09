@@ -22,7 +22,6 @@
 #include "levels/ccm/areas/3/2/model.inc.c"
 #include "levels/ccm/areas/4/1/model.inc.c"
 #include "levels/ccm/areas/4/2/model.inc.c"
-#include "levels/ccm/areas/4/3/model.inc.c"
 #include "levels/ccm/blue_smiley/model.inc.c"
 #include "levels/ccm/yellow_smiley/model.inc.c"
 #include "levels/ccm/star_smiley/model.inc.c"
