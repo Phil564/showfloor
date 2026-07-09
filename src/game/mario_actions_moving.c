@@ -382,44 +382,20 @@ s32 update_decelerating_speed(struct MarioState *m) {
 }
 
 void update_walking_speed(struct MarioState *m) {
-    f32 maxTargetSpeed;
+    f32 maxTargetSpeed = 32.0f;
     f32 targetSpeed;
 
-    if (m->floor != NULL && m->floor->type == SURFACE_SLOW) {
-        maxTargetSpeed = 24.0f;
-    } else {
-        maxTargetSpeed = 32.0f;
-    }
+    // no SURFACE_SLOW check as it's unused even in the final game, so maxTargetSpeed is always 32
 
     targetSpeed = m->intendedMag < maxTargetSpeed ? m->intendedMag : maxTargetSpeed;
 
-    if (m->forwardVel <= 0.0f) {
+    if (m->forwardVel < targetSpeed) {
         m->forwardVel += 0.5f;
-    } else if (m->forwardVel <= targetSpeed) {
-        m->forwardVel += 0.5f;
-    } else if (m->floor->normal.y >= 0.95f) {
-        m->forwardVel -= 0.49f;
-    }
-
-    if (m->forwardVel > 48.0f) {
-        m->forwardVel = 48.0f;
-    }
-
-    if (m->action == ACT_HOLD_WALKING) {
-        if (m->forwardVel >= targetSpeed && m->forwardVel < 13.0f) {
-            m->forwardVel = m->intendedMag;
-        }
-        if (m->forwardVel > 13.0f && m->intendedMag < 13.0f) {
-            m->forwardVel--;
-        }
     } else {
-        if (m->forwardVel >= targetSpeed && m->forwardVel < 32.0f) {
-            m->forwardVel = m->intendedMag;
-        }
-        if (m->forwardVel > 32.0f && m->intendedMag < 32.0f) {
-            m->forwardVel--;
-        }
+        m->forwardVel = targetSpeed; // this causes Mario to instantly decelerate if his speed is higher than the target
     }
+
+    // no 48 forwardVel cap as Mario can't go beyond the maxTargetSpeed of 32
 
     m->faceAngle[1] =
         m->intendedYaw - approach_s32((s16) (m->intendedYaw - m->faceAngle[1]), 0, 0x800, 0x800);
