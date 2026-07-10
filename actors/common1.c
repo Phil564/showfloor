@@ -39,7 +39,7 @@ UNUSED static const u64 binid_10 = 10;
 #include "warp_collision/collision.inc.c"
 UNUSED static const u64 binid_11 = 11;
 
-#include "power_meter/model.inc.c"
+#include "power_meter/meter.sou"
 UNUSED static const u64 binid_13 = 13;
 
 UNUSED static const u64 binid_14 = 14;

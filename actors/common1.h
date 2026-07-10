@@ -103,10 +103,10 @@ extern const Gfx mist_seg3_dl_03000920[];
 extern const GeoLayout number_geo[];
 
 // power_meter
-extern const u8 *const power_meter_health_segments_lut[];
-extern const Gfx dl_power_meter_base[];
-extern const Gfx dl_power_meter_health_segments_begin[];
-extern const Gfx dl_power_meter_health_segments_end[];
+extern const u8 *const MeterDataPtr[];
+extern const Gfx RCP_damegemeter_on[];
+extern const Gfx RCP_damegemeter_txt[];
+extern const Gfx RCP_damegemeter_off[];
 
 // sand
 extern const Gfx sand_seg3_dl_0302BCD0[];

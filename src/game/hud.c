@@ -83,7 +83,7 @@ void render_hud_small_tex_lut(s32 x, s32 y, u8 *texture) {
 void render_power_meter_health_segment(s16 numHealthWedges) {
     u8 *(*healthLUT)[];
 
-    healthLUT = segmented_to_virtual(power_meter_health_segments_lut);
+    healthLUT = segmented_to_virtual(MeterDataPtr);
 
     gDPPipeSync(gDisplayListHead++);
     g_Tani_LoadTextureImage2(gDisplayListHead++, (*healthLUT)[numHealthWedges * 2], G_IM_FMT_RGBA,
@@ -119,9 +119,11 @@ void render_dl_power_meter(s16 numHealthWedges) {
     gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(scaleMtx++),
               G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
 
-    gSPDisplayList(gDisplayListHead++, &dl_power_meter_base);
+    gSPDisplayList(gDisplayListHead++, &RCP_damegemeter_on);
 
+    gSPDisplayList(gDisplayListHead++, &RCP_damegemeter_txt);
     render_power_meter_health_segment(numHealthWedges);
+    gSPDisplayList(gDisplayListHead++, &RCP_damegemeter_off);
 
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 }
