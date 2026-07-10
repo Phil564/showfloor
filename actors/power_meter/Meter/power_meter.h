@@ -3,9 +3,11 @@
 
 **************************************************************************************************/
 
-// this is a custom version of power_meter.h from the iQue source that works with meter.sou
-// the way the meter is numbered is a bit odd, 1 is the full meter, and then as the number gets 
-// higher the meter gets emptier (so 9 is the empty meter for example)
+/* 
+ * This is a custom version of power_meter.h from the iQue source code that works with meter.sou.
+ * The way the textures are numbered is a bit odd. 1 is the full meter, and with every other number
+ * the meter gets emptier, so the lower the health, the higher the number of the texture.
+ */
 
 ALIGNED8 static const u8 power_meter1_000_txt[] = {
 #include "actors/power_meter/power_meter_left_side_full.rgba16.inc.c"

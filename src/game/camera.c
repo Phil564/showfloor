@@ -919,7 +919,7 @@ void radial_camera_move(struct Camera *c) {
                         break;
                     case LEVEL_LLL:
                         rotateSpeed = 100;
-                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x10;
+                        if (gCameraMovementFlags & CAM_FLAG_SPAWN) rotateSpeed = 0x12;
                         break;
                     case LEVEL_CCM:
                         rotateSpeed = 160;
@@ -6819,8 +6819,8 @@ void fov_default(struct MarioState *m) {
         camera_approach_f32_symmetric_bool(&sFOVState.fov, 45.f, (45.f - sFOVState.fov) / 30.f);
     }
 
-    // Nintendo is dumb
-    if ((gCurrLevelNum == LEVEL_WF) || (gCurrLevelNum == LEVEL_CCM) || (gCurrLevelNum == LEVEL_DDD)) {
+    // This keeps the FOV static when sleeping in WF, CCM, and DDD
+    if ((m->area->camera->mode == CAMERA_MODE_RADIAL) && (gCurrLevelNum != LEVEL_LLL)) {
         sFOVState.fov = 45.f;
     }
 }
