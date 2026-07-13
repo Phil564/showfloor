@@ -83,7 +83,7 @@ extern const Collision mountain_10_collision[];
 extern const Collision mountain_collision[];
 extern const MacroObject mountain_macro[];
 extern const struct MovtexQuadCollection wf_movtex_water[];
-extern struct AreaMapData areaMap_24_01;
+extern struct AreaMapData mountain_areamap;
 
 // script
 extern const LevelScript level_wf_entry[];

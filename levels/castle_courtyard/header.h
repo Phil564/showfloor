@@ -13,7 +13,7 @@ extern const Gfx courtyard_1_dl_mesh[];
 extern const Gfx courtyard_2_dl_mesh[];
 extern const Gfx courtyard_3_dl_mesh[];
 extern const Collision courtyard_collision[];
-extern struct AreaMapData areaMap_26_01;
+extern struct AreaMapData courtyard_areamap;
 
 // script
 extern const LevelScript level_castle_courtyard_entry[];

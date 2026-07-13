@@ -40,7 +40,7 @@ extern const Collision ccm_seg7_collision_podium_warp[];
 extern const MacroObject ccm_seg7_area_2_macro_objs[];
 extern const MacroObject ccm_seg7_area_3_macro_objs[];
 extern const MacroObject ccm_seg7_area_4_macro_objs[];
-extern struct AreaMapData areaMap_05_01;
+extern struct AreaMapData snow_slider_areamap;
 
 // script
 extern const LevelScript level_ccm_entry[];

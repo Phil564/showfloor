@@ -112,7 +112,7 @@ extern const Collision lll_seg7_collision_inverted_pyramid[];
 extern const Collision lll_seg7_collision_puzzle_piece[];
 extern const Collision lll_seg7_collision_floating_block[];
 extern const Collision lll_seg7_collision_hexagonal_platform[];
-extern struct AreaMapData areaMap_22_01;
+extern struct AreaMapData fire_bubble_areamap;
 
 // script
 extern const LevelScript level_lll_entry[];

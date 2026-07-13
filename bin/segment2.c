@@ -1690,12 +1690,12 @@ const Gfx dl_waterbox_end[] = {
 };
 
 // 0x02014838 - 0x02014878
-ALIGNED8 static const Texture texture_ia8_up_arrow[] = {
+ALIGNED8 static const Texture texture_ia8_up_arrow[] = { // areamap_arrow_txt
 #include "textures/segment2/segment2.14838.ia8.inc.c"
 };
 
 // 0x02014878 - 0x020148B0
-const Gfx dl_ia8_up_arrow_begin[] = {
+const Gfx dl_ia8_up_arrow_begin[] = { // called areamap_init_project in the iQue source code
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_LIGHTING),
     gsDPSetCombineMode(G_CC_MODULATEIA, G_CC_MODULATEIA),
@@ -1706,7 +1706,7 @@ const Gfx dl_ia8_up_arrow_begin[] = {
 };
 
 // 0x020148B0 - 0x020148E0
-// Unused, seems to be an early DL for the power meter, seeing that is loading a 64x32 texture
+// DL for the areamap base, called areamap_init_graphic1 in the iQue source code
 const Gfx dl_rgba16_unused[] = {
     gsSPMatrix(&matrix_identity, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH),
     gsDPTileSync(),
@@ -1717,7 +1717,7 @@ const Gfx dl_rgba16_unused[] = {
 };
 
 // 0x020148E0 - 0x02014938
-const Gfx dl_ia8_up_arrow_load_texture_block[] = {
+const Gfx dl_ia8_up_arrow_load_texture_block[] = { // called areamap_init_graphic2 in the iQue source code
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_MODULATEIA, G_CC_MODULATEIA),
     gsDPTileSync(),
@@ -1732,7 +1732,7 @@ const Gfx dl_ia8_up_arrow_load_texture_block[] = {
 };
 
 // 0x02014938 - 0x02014958
-const Gfx dl_ia8_up_arrow_end[] = {
+const Gfx dl_ia8_up_arrow_end[] = { // called areamap_mode_restore in the iQue source code
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),

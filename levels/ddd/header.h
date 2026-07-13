@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "game/moving_texture.h"
+#include "game/areamap.h"
 
 // geo
 extern const GeoLayout water_land_area_1_geo[];
@@ -24,8 +25,8 @@ extern const MacroObject water_land_area_2_macro[];
 extern const Collision water_land_submarine_collision[];
 extern const struct MovtexQuadCollection ddd_movtex_area1_water[];
 extern const struct MovtexQuadCollection ddd_movtex_area2_water[];
-extern struct AreaMapData areaMap_23_01;
-extern struct AreaMapData areaMap_23_02;
+extern struct AreaMapData water_land_area_1_areamap;
+extern struct AreaMapData water_land_area_2_areamap;
 
 // script
 extern const LevelScript level_ddd_entry[];

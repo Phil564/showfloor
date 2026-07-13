@@ -21,7 +21,7 @@ extern const Collision castle_grounds_collision[];
 extern const struct MovtexQuadCollection castle_grounds_movtex_water[];
 extern Movtex castle_grounds_movtex_tris_waterfall[];
 extern const Gfx castle_grounds_dl_waterfall[];
-extern struct AreaMapData areaMap_16_01;
+extern struct AreaMapData castle_grounds_areamap;
 
 // script
 extern const LevelScript level_castle_grounds_entry[];

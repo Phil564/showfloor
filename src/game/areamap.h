@@ -1,20 +1,17 @@
-
-#if !defined(AREAMAP_H)
+#ifndef AREAMAP_H
 #define AREAMAP_H
-
-#include <PR/ultratypes.h>
 
 #include "types.h"
 
+// Actual variables from the iQue source's areamap.h
 struct AreaMapData {
-    u8 *image_upper;	/* upper half */
-    u8 *image_lower;	/* lower half */
-    float map_x;    /* map X Position */
-    float xo_g;		/* arrow x offset */
-    float zo_g;		/* arrow y offset */
-    float side_g;	/* map size */
+    u8 *image_upper;	/* Texture Top Half */
+    u8 *image_lower;	/* Texture Bottom Half */
+    float xo_g;		/* Arrow X Offset */
+    float zo_g;		/* Arrow Z Offset */
+    float side_g;	/* Areamap Size (used for arrow placement) */
 };
 
-Gfx *AreaMap(s32 callContext, struct GraphNode *node, UNUSED Mat4 *c);
+Gfx *AreaMap(s32 callContext, struct GraphNode *node, UNUSED void *data);
 
 #endif /* AREAMAP_H */
